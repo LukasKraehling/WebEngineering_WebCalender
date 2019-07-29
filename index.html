@@ -43,7 +43,7 @@
 
     <div
       id="calendar"
-      class="d-flex justify-content-center flex-wrap flex-rows"
+      class="d-flex justify-content-center flex-wrap flex-rows calendar"
     ></div>
   </body>
 
@@ -56,10 +56,21 @@
 
     //###Block Variables(let)###
     let day;
+    let clickBig = false;
 
     for (let index = 1; index <= daysInMonth(6, 2019); index++) {
       day = document.createElement("div");
       day.innerHTML = "Day " + index;
+      day.id = index;
+      /*day.onclick = function() {
+        if (!clickBig) {
+          document.getElementById(index).setAttribute("class", "styleZoom");
+          clickBig = true;
+        } else {
+          document.getElementById(index).setAttribute("class", "calendar");
+          clickBig = false;
+        }
+      };*/
 
       document.getElementById("calendar").appendChild(day);
     }

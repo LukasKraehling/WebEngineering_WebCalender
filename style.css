@@ -2,25 +2,34 @@ body {
   background: #e9e9e9;
 }
 
-#calendar > div {
+#calendar {
+  /*sieht schöner aus, wenn weg und margin 30px*/
+  padding-top: 70px;
+  padding-right: 50px;
+  padding-left: 50px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.calendar > div {
   width: 150px;
   height: 150px;
-  margin: 30px;
+  margin: 20px; /*or 30px*/
   text-align: center;
   font-size: 20px;
   border: 8px solid #0dab7f;
+  background-color: #e9e9e9;
 
   text-decoration: none;
-  display: inline-block;
   transition: all 0.4s ease 0s;
 }
 
-#calendar > div:hover {
-
+.calendar > div:hover {
   text-shadow: 0px 0px 6px rgba(255, 255, 255, 1);
-    -webkit-box-shadow: 0px 5px 40px 0px rgba(0,0,0,0.57);
-    -moz-box-shadow: 0px 5px 40px 0px rgba(0,0,0,0.57);
-    transition: all 0.4s ease 0s;
+  -webkit-box-shadow: 0px 5px 40px 0px rgba(0, 0, 0, 0.57);
+  -moz-box-shadow: 0px 5px 40px 0px rgba(0, 0, 0, 0.57);
+  transition: all 0.4s ease 0s;
+  transform: scale(3.5);
 }
 
 .btn-primary,
@@ -34,3 +43,13 @@ body {
   border: 0 none;
   background-color: #0cc792;
 }
+
+/* Falls vergrößter Kalendertag angezeigt werden soll in verbindung mit javascript onclick
+.styleZoom {
+  text-shadow: 0px 0px 6px rgba(255, 255, 255, 1);
+  -webkit-box-shadow: 0px 5px 40px 0px rgba(0, 0, 0, 0.57);
+  -moz-box-shadow: 0px 5px 40px 0px rgba(0, 0, 0, 0.57);
+  transition: all 0.4s ease 0s;
+  transform: scale(3.5);
+  pointer-events: none;
+}*/
