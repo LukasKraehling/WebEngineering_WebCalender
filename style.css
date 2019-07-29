@@ -10,3 +10,15 @@ body {
   font-size: 30px;
   border: 8px solid #0dab7f;
 }
+
+.btn-primary,
+.btn-primary:active,
+.btn-primary:visited {
+  border: 0 none;
+  background-color: #0dab7f;
+}
+
+.btn-primary:hover {
+  border: 0 none;
+  background-color: #0cc792;
+}
