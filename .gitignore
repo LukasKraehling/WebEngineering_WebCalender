@@ -328,9 +328,5 @@ ASALocalRun/
 
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
-<<<<<<< HEAD
 
 .gitconfig
-=======
-.gitconfig
->>>>>>> 3776e2f4bba050566b7b64f0dee00bca1d5dd400
