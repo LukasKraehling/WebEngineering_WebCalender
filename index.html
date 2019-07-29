@@ -49,7 +49,14 @@
 
   <!-- Calendar-Javascript-->
   <script>
+    //###Constants###
+    const USERNAME = "18222-18079"; //DHBW-Usernames
+
+    //###Variables(var)###
+
+    //###Block Variables(let)###
     let day;
+
     for (let index = 1; index <= daysInMonth(6, 2019); index++) {
       day = document.createElement("div");
       day.innerHTML = "Day " + index;
@@ -57,6 +64,7 @@
       document.getElementById("calendar").appendChild(day);
     }
 
+    //###Functions###
     //Function to give back the number of days that the given month has
     function daysInMonth(month, year) {
       return new Date(year, month, 0).getDate();
