@@ -1,17 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <!-- Website-Title -->
+    <!--Website-Title-->
     <title>Ci-Ca-Calendar</title>
 
-    <!-- Required meta tags -->
+    <!-- External CSS-Stylesheet-->
+    <link rel="stylesheet" href="style.css" />
+
+    <!--Required meta tags-->
     <meta charset="utf-8" />
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
 
-    <!-- Bootstrap CSS -->
+    <!--Bootstrap CSS-->
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -19,8 +22,25 @@
       crossorigin="anonymous"
     />
 
-    <!-- External CSS-Stylesheet-->
-    <link rel="stylesheet" href="style.css" />
+    <!--Dependencies-->
+    <!--jQuery-->
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"
+    ></script>
+    <!--Popper JS-->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.15.0/umd/popper.min.js"
+      integrity="sha256-fTuUgtT7O2rqoImwjrhDgbXTKUwyxxujIMRIK7TbuNU="
+      crossorigin="anonymous"
+    ></script>
+    <!--Bootstrap JS-->
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
   </head>
 
   <body>
@@ -51,12 +71,29 @@
   <script>
     //###Constants###
     const USERNAME = "18222-18079"; //DHBW-Usernames
+    const SERVICE_URL = "https://dhbw.cheekbyte.de/calendar/"; //DHBW-Usernames
 
     //###Variables(var)###
 
     //###Block Variables(let)###
     let day;
     let clickBig = false;
+    let events;
+
+    //Get all events
+    jQuery.ajax({
+      url: SERVICE_URL,
+      data: "/{" + USERNAME + "}/events",
+      type: "GET",
+      dataType: "json",
+      success: function(data) {
+        events = data;
+        console.log(events);
+      },
+      error: function(error) {
+        alert("An error occured: " + error.status + " " + error.statusText);
+      }
+    });
 
     for (let index = 1; index <= daysInMonth(6, 2019); index++) {
       day = document.createElement("div");
@@ -81,22 +118,5 @@
       return new Date(year, month, 0).getDate();
     }
   </script>
-
-  <!--Dependencies-->
-  <!-- jQuery, Popper.js, Bootstrap JS -->
-  <script
-    src="https://code.jquery.com/jquery-3.4.1.min.js"
-    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-    crossorigin="anonymous"
-  ></script>
-  <script
-    src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.15.0/umd/popper.min.js"
-    integrity="sha256-fTuUgtT7O2rqoImwjrhDgbXTKUwyxxujIMRIK7TbuNU="
-    crossorigin="anonymous"
-  ></script>
-  <script
-    src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-    crossorigin="anonymous"
-  ></script>
+  -
 </html>
