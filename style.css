@@ -2,6 +2,17 @@ body {
   background-color: #e0e0e0;
 }
 
+.header p {
+  padding-top: 20px;
+  height: 30%;
+  font-size: 50px;
+  text-align: center;
+}
+
+.month {
+  text-align: center;
+}
+
 #calendar {
   /*sieht schöner aus, wenn weg und margin 30px*/
   padding-top: 70px;
