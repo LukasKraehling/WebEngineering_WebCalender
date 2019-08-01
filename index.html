@@ -98,7 +98,7 @@
       }
     });
 
-    for (let index = 1; index <= daysInMonth(6, 2019); index++) {
+    for (let index = 1; index <= daysInMonth(7, 2019); index++) {
       day = document.createElement("div");
       day.innerHTML = "Day " + index;
       day.id = index;
@@ -120,5 +120,13 @@
     function daysInMonth(month, year) {
       return new Date(year, month, 0).getDate();
     }
+
+    //###JQuery Code###
+    $("#calendar > div").mouseover(function() {
+      $(this).addClass("onhover");
+    });
+    $("#calendar > div").mouseout(function() {
+      $(this).removeClass("onhover");
+    });
   </script>
 </html>
