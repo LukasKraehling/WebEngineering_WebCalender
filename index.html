@@ -282,10 +282,16 @@
     $("#calendar > div").mouseenter(function() {
       //hover day
       $(this).addClass("onhover");
+      //get element the mouse hovers on
+      var dayID = this.id;
       //add a div for hovered day content
       var dayBody = $("<div/>").attr({
         id: "daybody"
       });
+      var dayBodyHeader = $("<div/>").attr({
+        id: "daybodyheader"
+      });
+      $(dayBodyHeader).append("<p> Day " + dayID + "</p>");
 
       //add a line for adding entry---------------------
       var entryLine = $("<div/>").attr({
@@ -294,18 +300,18 @@
       //add the button for adding entry
       var addBtn = $("<input/>").attr({
         type: "button",
-        class: "btn btn-primary detailview",
+        class: "detailview btn btn-primary",
         id: "addbtn",
         value: "Add"
       });
       var nameField = $("<input/>").attr({
         type: "text",
-        class: "detailview",
+        class: "detailview form-control inputf",
         id: "namefield"
       });
       var dateField = $("<input/>").attr({
         type: "date",
-        class: "detailview",
+        class: "detailview form-control inputf",
         id: "datefield"
       });
 
@@ -314,15 +320,20 @@
       $(entryLine).append(dateField);
       //------------------------------------------------
 
+      var termin1 = $("<div/>").attr({
+        id: "termin1"
+      });
       var remBtn = $("<input/>").attr({
         type: "button",
-        class: "btn btn-primary detailview",
+        class: "detailview apmnt btn btn-primary",
         id: "rembtn",
         value: "Remove"
       });
+      $(termin1).append(remBtn);
 
+      $(dayBody).append(dayBodyHeader);
       $(dayBody).append(entryLine);
-      $(dayBody).append(remBtn);
+      $(dayBody).append(termin1);
 
       $(document).on("click", "#calendar > div", function() {
         $(".content-calendar").append(dayBody);
