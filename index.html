@@ -77,30 +77,14 @@
   <!-- Calendar-Javascript-->
   <script>
     //###Constants###
-    const USERNAME = "18222-18079"; //DHBW-Usernames
-    const SERVICE_URL = "https://dhbw.cheekbyte.de/calendar/"; //DHBW-Usernames
+    const USERNAME = "18222";
+    const SERVICE_URL = "https://dhbw.cheekbyte.de/calendar/" + USERNAME + "/"; //DHBW-Usernames
 
     //###Variables(var)###
 
     //###Block Variables(let)###
     let day;
     let clickBig = false;
-    let events;
-
-    //Get all events
-    jQuery.ajax({
-      url: SERVICE_URL,
-      data: "/{" + USERNAME + "}/events",
-      type: "GET",
-      dataType: "json",
-      success: function(data) {
-        events = data;
-        console.log(events);
-      },
-      error: function(error) {
-        alert("An error occured: " + error.status + " " + error.statusText);
-      }
-    });
 
     for (let index = 1; index <= daysInMonth(7, 2019); index++) {
       day = document.createElement("div");
@@ -114,6 +98,184 @@
     //Function to give back the number of days that the given month has
     function daysInMonth(month, year) {
       return new Date(year, month, 0).getDate();
+    }
+
+    //Function to get all events from the remote-database
+    function getEvents() {
+      $.ajax({
+        url: SERVICE_URL + "events",
+        success: function(data) {
+          return data;
+        },
+        error: function(error) {
+          alert(
+            "Could not get events: " + error.status + " " + error.statusText
+          );
+          return null;
+        }
+      });
+    }
+
+    //Function to add an event to the remote-database !!!TODO!!! (Fix image-Data and categories)
+    function addEvent(
+      title,
+      location,
+      organizer,
+      start,
+      end,
+      status,
+      allday,
+      webpage,
+      imageData,
+      categories,
+      id,
+      extra
+    ) {
+      $.ajax({
+        url: SERVICE_URL + "events",
+        type: "POST",
+        dataType: "json",
+        data:
+          '{"title":"' +
+          title +
+          '",' +
+          '"location": "' +
+          location +
+          '",' +
+          '"organizer": "' +
+          organizer +
+          '",' +
+          '"start": "' +
+          start + //Format: 2014-12-24T18:00
+          '",' +
+          '"end": "' +
+          end + //Format: 2014-12-24T23:30
+          '",' +
+          '"status": "' +
+          status +
+          '",' +
+          '"allday":' +
+          allday +
+          "," +
+          '"webpage": "' +
+          webpage +
+          '",' +
+          '"image data": null,' +
+          '"categories": [],' +
+          '"id": "' +
+          id +
+          '",' +
+          '"extra":"' +
+          extra +
+          '"}',
+        success: function(data) {
+          return true;
+        },
+        error: function(error) {
+          alert(
+            "Could not add event: " + error.status + " " + error.statusText
+          );
+          return false;
+        }
+      });
+    }
+
+    //Function to retrieve an event from the remote-database
+    function retrieveEvent(id) {
+      $.ajax({
+        url: SERVICE_URL + "events/" + id,
+        success: function(data) {
+          return true;
+        },
+        error: function(error) {
+          alert(
+            "Could not retrieve event: " + error.status + " " + error.statusText
+          );
+          return false;
+        }
+      });
+    }
+
+    //Function to update an event at the remote-database !!!TODO!!! (Fix image-Data and categories)
+    function updateEvent(
+      eventId,
+      title,
+      location,
+      organizer,
+      start,
+      end,
+      status,
+      allday,
+      webpage,
+      imageData,
+      categories,
+      id,
+      extra
+    ) {
+      $.ajax({
+        url: SERVICE_URL + "events/" + eventId,
+        type: "PUT",
+        dataType: "json",
+        data:
+          '{"title":"' +
+          title +
+          '",' +
+          '"location": "' +
+          location +
+          '",' +
+          '"organizer": "' +
+          organizer +
+          '",' +
+          '"start": "' +
+          start + //Format: 2014-12-24T18:00
+          '",' +
+          '"end": "' +
+          end + //Format: 2014-12-24T23:30
+          '",' +
+          '"status": "' +
+          status +
+          '",' +
+          '"allday":' +
+          allday +
+          "," +
+          '"webpage": "' +
+          webpage +
+          '",' +
+          '"image data": null,' +
+          '"categories": [],' +
+          '"id": "' +
+          id +
+          '",' +
+          '"extra":"' +
+          extra +
+          '"}',
+        success: function(data) {
+          return true;
+        },
+        error: function(error) {
+          alert(
+            "Could not update event: " + error.status + " " + error.statusText
+          );
+          return false;
+        }
+      });
+    }
+
+    //Function to delete an event from the remote-database
+    function deleteEvent(id) {
+      $.ajax({
+        url: SERVICE_URL + "events/" + id,
+        type: "DELETE",
+        success: function(data) {
+          return true;
+        },
+        error: function(error) {
+          alert(
+            "Could not delete event: " + error.status + " " + error.statusText
+          );
+          return false;
+        }
+      });
     }
 
     //###JQuery Code###
