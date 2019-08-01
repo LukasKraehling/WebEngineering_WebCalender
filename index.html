@@ -44,29 +44,33 @@
   </head>
 
   <body>
-    <div class="header">
-      <p>Ci-Ca-Calender</p>
-    </div>
+    <div class="site">
+      <div class="header">
+        <p>Ci-Ca-Calender</p>
+      </div>
 
-    <div class="content">
-      <div class="menu">
-        <div class="month">
-          <button id="viewBtn" type="button" class="btn btn-primary">
-            Month before
-          </button>
-          July 2019
-          <button id="viewBtn" type="button" class="btn btn-primary">
-            Month after
-          </button>
+      <div class="content">
+        <div class="menu">
+          <div class="month">
+            <button id="viewBtn" type="button" class="btn btn-primary">
+              Month before
+            </button>
+            July 2019
+            <button id="viewBtn" type="button" class="btn btn-primary">
+              Month after
+            </button>
+          </div>
+        </div>
+        <button id="viewBtn" type="button" class="btn btn-primary">
+          Change view
+        </button>
+        <div class="content-calendar">
+          <div
+            id="calendar"
+            class="d-flex justify-content-center flex-wrap flex-rows calendar"
+          ></div>
         </div>
       </div>
-      <button id="viewBtn" type="button" class="btn btn-primary">
-        Change view
-      </button>
-      <div
-        id="calendar"
-        class="d-flex justify-content-center flex-wrap flex-rows calendar"
-      ></div>
     </div>
   </body>
 
@@ -102,15 +106,6 @@
       day = document.createElement("div");
       day.innerHTML = "Day " + index;
       day.id = index;
-      /*day.onclick = function() {
-        if (!clickBig) {
-          document.getElementById(index).setAttribute("class", "styleZoom");
-          clickBig = true;
-        } else {
-          document.getElementById(index).setAttribute("class", "calendar");
-          clickBig = false;
-        }
-      };*/
 
       document.getElementById("calendar").appendChild(day);
     }
@@ -122,11 +117,64 @@
     }
 
     //###JQuery Code###
-    $("#calendar > div").mouseover(function() {
+    $("#calendar > div").mouseenter(function() {
+      //hover day
       $(this).addClass("onhover");
+      //add a div for hovered day content
+      var dayBody = $("<div/>").attr({
+        id: "daybody"
+      });
+
+      //add a line for adding entry---------------------
+      var entryLine = $("<div/>").attr({
+        id: "entryline"
+      });
+      //add the button for adding entry
+      var addBtn = $("<input/>").attr({
+        type: "button",
+        class: "btn btn-primary detailview",
+        id: "addbtn",
+        value: "Add"
+      });
+      var nameField = $("<input/>").attr({
+        type: "text",
+        class: "detailview",
+        id: "namefield"
+      });
+      var dateField = $("<input/>").attr({
+        type: "date",
+        class: "detailview",
+        id: "datefield"
+      });
+
+      $(entryLine).append(addBtn);
+      $(entryLine).append(nameField);
+      $(entryLine).append(dateField);
+      //------------------------------------------------
+
+      var remBtn = $("<input/>").attr({
+        type: "button",
+        class: "btn btn-primary detailview",
+        id: "rembtn",
+        value: "Remove"
+      });
+
+      $(dayBody).append(entryLine);
+      $(dayBody).append(remBtn);
+
+      $(document).on("click", "#calendar > div", function() {
+        $(".content-calendar").append(dayBody);
+        $("#calendar").unbind("hover");
+      });
     });
-    $("#calendar > div").mouseout(function() {
+    $("#calendar > div").mouseleave(function() {
       $(this).removeClass("onhover");
+
+      $(document).on("click", ".site", function(e) {
+        if ($(e.target).closest("#daybody").length == 0) {
+          $("#daybody").remove();
+        }
+      });
     });
   </script>
 </html>
