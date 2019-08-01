@@ -50,7 +50,27 @@ body {
 }
 
 .detailview {
-  background-color: #0dab7f;
+  margin: 0px 0px 15px 15px;
+  vertical-align: middle;
+  display: inline;
+}
+
+.inputf {
+  width: 180px;
+}
+
+.apmnt {
+  margin-top: 5px;
+}
+
+#entryline {
+  border-bottom: 1px solid black;
+}
+
+#daybodyheader p {
+  font-size: calc(20px * 3.5);
+  text-align: center;
+  border-bottom: 1px solid black;
 }
 
 .btn-primary,
