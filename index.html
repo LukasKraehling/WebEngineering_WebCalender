@@ -401,7 +401,6 @@
 
     function addHoverEvent() {
       $("#calendar > div").mouseenter(function() {
-        console.info("hovered");
         //hover day
         $(this).addClass("onhover");
         //get element the mouse hovers on
@@ -413,7 +412,39 @@
         var dayBodyHeader = $("<div/>").attr({
           id: "daybodyheader"
         });
-        $(dayBodyHeader).append("<p> Day " + dayID + "</p>");
+        if (dayID == 1 || dayID == 21 || dayID == 31) {
+          $(dayBodyHeader).append(
+            "<p>" +
+              dayID +
+              "st " +
+              MONTH_NAMES_SHORT[currentDate.getMonth()] +
+              "</p>"
+          );
+        } else if (dayID == 2 || dayID == 22) {
+          $(dayBodyHeader).append(
+            "<p>" +
+              dayID +
+              "nd " +
+              MONTH_NAMES_SHORT[currentDate.getMonth()] +
+              "</p>"
+          );
+        } else if (dayID == 3 || dayID == 23) {
+          $(dayBodyHeader).append(
+            "<p>" +
+              dayID +
+              "rd " +
+              MONTH_NAMES_SHORT[currentDate.getMonth()] +
+              "</p>"
+          );
+        } else {
+          $(dayBodyHeader).append(
+            "<p>" +
+              dayID +
+              "th " +
+              MONTH_NAMES_SHORT[currentDate.getMonth()] +
+              "</p>"
+          );
+        }
 
         //add a line for adding entry---------------------
         var entryLine = $("<div/>").attr({
@@ -429,17 +460,19 @@
         var nameField = $("<input/>").attr({
           type: "text",
           class: "detailview form-control inputf",
-          id: "namefield"
+          id: "namefield",
+          placeholder: "Appointment Name"
         });
-        var dateField = $("<input/>").attr({
-          type: "date",
-          class: "detailview form-control inputf",
-          id: "datefield"
+        var timeField = $("<input/>").attr({
+          type: "time",
+          class: "detailview form-control timeInput inputf",
+          id: "timefield",
+          placeholder: "starttime"
         });
 
         $(entryLine).append(addBtn);
         $(entryLine).append(nameField);
-        $(entryLine).append(dateField);
+        $(entryLine).append(timeField);
 
         //------------------------------------------------
 
@@ -460,7 +493,6 @@
 
         $(document).on("click", "#calendar > div", function() {
           $(".content-calendar").append(dayBody);
-          $("#calendar").unbind("hover");
         });
       });
       $("#calendar > div").mouseleave(function() {
