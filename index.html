@@ -170,18 +170,30 @@
           (currentDate.getMonth() + 1) +
           "-";
       }
-      console.log(events);
+
       $.each(events, function(i, event) {
         if (event.start.includes(searchString)) {
           eventDiv = document.createElement("div");
+          $(eventDiv).addClass("eventDiv");
+          eventDiv.id = "event" + event.id;
+
+          var evBlock = $("<div/>").attr({
+            id: "evBlock",
+            class: "event"
+          });
+          $(eventDiv).append(evBlock);
           if (event.title.length < 10) {
-            eventDiv.innerHTML = event.title;
+            //eventDiv.innerHTML = event.title;
+            var testBlock = $("<div/>").attr({
+              id: "testblock"
+            });
+            $(evBlock).append("<p>" + event.title + "</p>");
+            $(testBlock).prepend(evBlock);
           } else {
-            eventDiv.innerHTML = event.title.substring(0, 8) + "...";
+            //eventDiv.innerHTML = event.title.substring(0, 8) + "...";
           }
 
-          eventDiv.id = "event" + event.id;
-          eventDiv.classList.add("event");
+          $(eventDiv).append(testBlock);
           document
             .getElementById(event.start.substring(9, 10))
             .appendChild(eventDiv);
