@@ -374,7 +374,39 @@
         var dayBodyHeader = $("<div/>").attr({
           id: "daybodyheader"
         });
-        $(dayBodyHeader).append("<p> Day " + dayID + "</p>");
+        if (dayID == 1 || dayID == 21 || dayID == 31) {
+          $(dayBodyHeader).append(
+            "<p>" +
+              dayID +
+              "st " +
+              MONTH_NAMES_SHORT[currentDate.getMonth()] +
+              "</p>"
+          );
+        } else if (dayID == 2 || dayID == 22) {
+          $(dayBodyHeader).append(
+            "<p>" +
+              dayID +
+              "nd " +
+              MONTH_NAMES_SHORT[currentDate.getMonth()] +
+              "</p>"
+          );
+        } else if (dayID == 3 || dayID == 23) {
+          $(dayBodyHeader).append(
+            "<p>" +
+              dayID +
+              "rd " +
+              MONTH_NAMES_SHORT[currentDate.getMonth()] +
+              "</p>"
+          );
+        } else {
+          $(dayBodyHeader).append(
+            "<p>" +
+              dayID +
+              "th " +
+              MONTH_NAMES_SHORT[currentDate.getMonth()] +
+              "</p>"
+          );
+        }
 
         //add a line for adding entry---------------------
         var entryLine = $("<div/>").attr({
