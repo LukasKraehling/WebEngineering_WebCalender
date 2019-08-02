@@ -97,24 +97,8 @@
     var events = null;
 
     //###Main-Script####
-    //Example
-    /*
-    addEvent(
-      "test",
-      null,
-      "lukas.K98@web.de",
-      "2014-12-24T00:00",
-      "2014-12-25T23:59",
-      "Busy",
-      "true",
-      null,
-      null,
-      null,
-      null
-    );
-    */
+    getEvents();
 
-    reloadDays(currentDate.getMonth(), currentDate.getYear() + 1900); //Start with current date
     reloadDays(); //Start with current date
     addHoverEvent();
 
@@ -154,6 +138,7 @@
     }
 
     //Function to get all events from the remote-database
+    //Example: addEvent("test", null, "lukas.K98@web.de", "2014-12-24T00:00", "2014-12-25T23:59", "Busy", "true", null, null, null, null);
     function getEvents() {
       $.ajax({
         url: SERVICE_URL + "events",
