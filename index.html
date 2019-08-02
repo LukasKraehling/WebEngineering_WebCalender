@@ -148,10 +148,48 @@
             index + "th " + MONTH_NAMES_SHORT[currentDate.getMonth()];
         }
 
-        day.id = index;
+        day.id = "day" + index;
 
         document.getElementById("calendar").appendChild(day);
       }
+
+      //Add events to days
+      if (currentDate.getMonth() + 1 < 10) {
+        searchString =
+          currentDate.getYear() +
+          1900 +
+          "-0" +
+          (currentDate.getMonth() + 1) +
+          "-";
+      } else {
+        searchString =
+          currentDate.getYear() +
+          1900 +
+          "-" +
+          (currentDate.getMonth() + 1) +
+          "-";
+      }
+
+      $.each(events, function(i, event) {
+        if (event.start.includes(searchString)) {
+          event.start = event.start.replace(searchString, "");
+          event.start = event.start.replace("0", "");
+
+          eventDiv = document.createElement("div");
+          if (event.title.length < 10) {
+            eventDiv.innerHTML = event.title;
+          } else {
+            eventDiv.innerHTML = event.title.substring(0, 8) + "...";
+          }
+
+          eventDiv.id = "event" + event.id;
+          eventDiv.classList.add("event");
+
+          document
+            .getElementById("day" + event.start.charAt(0))
+            .appendChild(eventDiv);
+        }
+      });
 
       //Update Date-Indicator
       document.getElementById("currentDate").innerHTML =
