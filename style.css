@@ -59,6 +59,10 @@ body {
   margin-top: 5px;
 }
 
+#timefield {
+  width: 110px;
+}
+
 #entryline {
   border-bottom: 1px solid black;
 }

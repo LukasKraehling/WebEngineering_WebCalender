@@ -337,7 +337,6 @@
 
     function addHoverEvent() {
       $("#calendar > div").mouseenter(function() {
-        console.info("hovered");
         //hover day
         $(this).addClass("onhover");
         //get element the mouse hovers on
@@ -365,17 +364,19 @@
         var nameField = $("<input/>").attr({
           type: "text",
           class: "detailview form-control inputf",
-          id: "namefield"
+          id: "namefield",
+          placeholder: "Appointment Name"
         });
-        var dateField = $("<input/>").attr({
-          type: "date",
-          class: "detailview form-control inputf",
-          id: "datefield"
+        var timeField = $("<input/>").attr({
+          type: "time",
+          class: "detailview form-control timeInput inputf",
+          id: "timefield",
+          placeholder: "starttime"
         });
 
         $(entryLine).append(addBtn);
         $(entryLine).append(nameField);
-        $(entryLine).append(dateField);
+        $(entryLine).append(timeField);
 
         //------------------------------------------------
 
@@ -396,7 +397,6 @@
 
         $(document).on("click", "#calendar > div", function() {
           $(".content-calendar").append(dayBody);
-          $("#calendar").unbind("hover");
         });
       });
       $("#calendar > div").mouseleave(function() {
