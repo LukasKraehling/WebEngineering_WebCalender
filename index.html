@@ -54,7 +54,7 @@
           <button id="MonthBeforeBtn" type="button" class="btn btn-primary">
             Previous month
           </button>
-          <div id="currentDate"></div>
+          <div id="currentDate">Loading...</div>
           <button id="MonthAfterBtn" type="button" class="btn btn-primary">
             Next month
           </button>
@@ -91,16 +91,31 @@
       "November",
       "December"
     ];
+    const MONTH_NAMES_SHORT = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec"
+    ];
 
     //###Variables(var)###
     var currentDate = new Date();
     var events = null;
 
     //###Main-Script####
-    getEvents();
+    loading = document.createElement("div");
+    loading.innerHTML = "Loading...";
+    document.getElementById("calendar").appendChild(loading);
 
-    reloadDays(); //Start with current date
-    addHoverEvent();
+    getEventsAndReload();
 
     //###Functions###
     //Function to create as many day-divs as the current month has and overrides the old day-divs
@@ -119,7 +134,20 @@
         index++
       ) {
         day = document.createElement("div");
-        day.innerHTML = "Day " + index;
+        if (index == 1 || index == 21 || index == 31) {
+          day.innerHTML =
+            index + "st " + MONTH_NAMES_SHORT[currentDate.getMonth()];
+        } else if (index == 2 || index == 22) {
+          day.innerHTML =
+            index + "nd " + MONTH_NAMES_SHORT[currentDate.getMonth()];
+        } else if (index == 3 || index == 23) {
+          day.innerHTML =
+            index + "rd " + MONTH_NAMES_SHORT[currentDate.getMonth()];
+        } else {
+          day.innerHTML =
+            index + "th " + MONTH_NAMES_SHORT[currentDate.getMonth()];
+        }
+
         day.id = index;
 
         document.getElementById("calendar").appendChild(day);
@@ -139,18 +167,19 @@
 
     //Function to get all events from the remote-database
     //Example: addEvent("test", null, "lukas.K98@web.de", "2014-12-24T00:00", "2014-12-25T23:59", "Busy", "true", null, null, null, null);
-    function getEvents() {
+    function getEventsAndReload() {
       $.ajax({
         url: SERVICE_URL + "events",
         success: function(data) {
           events = data;
-          return data;
+          reloadDays(); //Start with current date
+          addHoverEvent();
         },
         error: function(error) {
           alert(
             "Could not get events: " + error.status + " " + error.statusText
           );
-          return null;
+          return false;
         }
       });
     }
