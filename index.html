@@ -114,6 +114,8 @@
     */
 
     reloadDays(currentDate.getMonth(), currentDate.getYear() + 1900); //Start with current date
+    reloadDays(); //Start with current date
+    addHoverEvent();
 
     //###Functions###
     //Function to create as many day-divs as the current month has and overrides the old day-divs
@@ -329,6 +331,7 @@
         currentDate.setMonth(currentDate.getMonth() + 1);
       }
       reloadDays();
+      addHoverEvent();
     });
 
     //"Month before"-button functionality
@@ -339,86 +342,90 @@
         currentDate.setMonth(currentDate.getMonth() - 1);
       }
       reloadDays();
+      addHoverEvent();
     });
 
-    $("#calendar > div").mouseenter(function() {
-      //hover day
-      $(this).addClass("onhover");
-      //get element the mouse hovers on
-      var dayID = this.id;
-      //add a div for hovered day content
-      var dayBody = $("<div/>").attr({
-        id: "daybody"
-      });
-      var dayBodyHeader = $("<div/>").attr({
-        id: "daybodyheader"
-      });
-      $(dayBodyHeader).append("<p> Day " + dayID + "</p>");
+    function addHoverEvent() {
+      $("#calendar > div").mouseenter(function() {
+        console.info("hovered");
+        //hover day
+        $(this).addClass("onhover");
+        //get element the mouse hovers on
+        var dayID = this.id;
+        //add a div for hovered day content
+        var dayBody = $("<div/>").attr({
+          id: "daybody"
+        });
+        var dayBodyHeader = $("<div/>").attr({
+          id: "daybodyheader"
+        });
+        $(dayBodyHeader).append("<p> Day " + dayID + "</p>");
 
-      //add a line for adding entry---------------------
-      var entryLine = $("<div/>").attr({
-        id: "entryline"
-      });
-      //add the button for adding entry
-      var addBtn = $("<input/>").attr({
-        type: "button",
-        class: "detailview btn btn-primary",
-        id: "addbtn",
-        value: "Add"
-      });
-      var nameField = $("<input/>").attr({
-        type: "text",
-        class: "detailview form-control inputf",
-        id: "namefield"
-      });
-      var dateField = $("<input/>").attr({
-        type: "date",
-        class: "detailview form-control inputf",
-        id: "datefield"
-      });
+        //add a line for adding entry---------------------
+        var entryLine = $("<div/>").attr({
+          id: "entryline"
+        });
+        //add the button for adding entry
+        var addBtn = $("<input/>").attr({
+          type: "button",
+          class: "detailview btn btn-primary",
+          id: "addbtn",
+          value: "Add"
+        });
+        var nameField = $("<input/>").attr({
+          type: "text",
+          class: "detailview form-control inputf",
+          id: "namefield"
+        });
+        var dateField = $("<input/>").attr({
+          type: "date",
+          class: "detailview form-control inputf",
+          id: "datefield"
+        });
 
-      $(entryLine).append(addBtn);
-      $(entryLine).append(nameField);
-      $(entryLine).append(dateField);
+        $(entryLine).append(addBtn);
+        $(entryLine).append(nameField);
+        $(entryLine).append(dateField);
 
-      //------------------------------------------------
+        //------------------------------------------------
 
-      var termin1 = $("<div/>").attr({
-        id: "termin1"
+        var termin1 = $("<div/>").attr({
+          id: "termin1"
+        });
+        var remBtn = $("<input/>").attr({
+          type: "button",
+          class: "detailview apmnt btn btn-primary",
+          id: "rembtn",
+          value: "Remove"
+        });
+        $(termin1).append(remBtn);
+
+        $(dayBody).append(dayBodyHeader);
+        $(dayBody).append(entryLine);
+        $(dayBody).append(termin1);
+
+        $(document).on("click", "#calendar > div", function() {
+          $(".content-calendar").append(dayBody);
+          $("#calendar").unbind("hover");
+        });
       });
-      var remBtn = $("<input/>").attr({
-        type: "button",
-        class: "detailview apmnt btn btn-primary",
-        id: "rembtn",
-        value: "Remove"
+      $("#calendar > div").mouseleave(function() {
+        $(this).removeClass("onhover");
+
+        $(document).on("click", ".site", function(e) {
+          if ($(e.target).closest("#daybody").length == 0) {
+            $("#daybody").remove();
+          }
+        });
       });
-      $(termin1).append(remBtn);
-
-      $(dayBody).append(dayBodyHeader);
-      $(dayBody).append(entryLine);
-      $(dayBody).append(termin1);
-
-      $(document).on("click", "#calendar > div", function() {
-        $(".content-calendar").append(dayBody);
-        $("#calendar").unbind("hover");
-      });
-    });
-    $("#calendar > div").mouseleave(function() {
-      $(this).removeClass("onhover");
-
-      $(document).on("click", ".site", function(e) {
-        if ($(e.target).closest("#daybody").length == 0) {
-          $("#daybody").remove();
+      $(document).on("click", "#addbtn", function() {
+        if (
+          $("#datefield").val().length >= 0 &&
+          $("#namefield").val().length >= 0
+        ) {
+          //!!!need to add event here!!!
         }
       });
-    });
-    $(document).on("click", "#addbtn", function() {
-      if (
-        $("#datefield").val().length >= 0 &&
-        $("#datefield").val().length >= 0
-      ) {
-        //!!!need to add event here!!!
-      }
-    });
+    }
   </script>
 </html>
