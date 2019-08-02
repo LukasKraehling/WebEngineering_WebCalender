@@ -96,6 +96,23 @@
     var currentDate = new Date();
 
     //###Main-Script####
+    //Example
+    /*
+    addEvent(
+      "test",
+      null,
+      "lukas.K98@web.de",
+      "2014-12-24T00:00",
+      "2014-12-25T23:59",
+      "Busy",
+      "true",
+      null,
+      null,
+      null,
+      null
+    );
+    */
+
     reloadDays(currentDate.getMonth(), currentDate.getYear() + 1900); //Start with current date
 
     //###Functions###
@@ -153,15 +170,14 @@
     function addEvent(
       title,
       location,
-      organizer,
-      start,
-      end,
-      status,
-      allday,
+      organizer, //Mandatory
+      start, //Mandatory
+      end, //Mandatory
+      status, //Mandatory
+      allday, //Mandatory
       webpage,
       imageData,
       categories,
-      id,
       extra
     ) {
       $.ajax({
@@ -195,9 +211,6 @@
           '",' +
           '"image data": null,' +
           '"categories": [],' +
-          '"id": "' +
-          id +
-          '",' +
           '"extra":"' +
           extra +
           '"}',
@@ -234,15 +247,14 @@
       eventId,
       title,
       location,
-      organizer,
-      start,
-      end,
-      status,
-      allday,
+      organizer, //Mandatory
+      start, //Mandatory
+      end, //Mandatory
+      status, //Mandatory
+      allday, //Mandatory
       webpage,
       imageData,
       categories,
-      id,
       extra
     ) {
       $.ajax({
@@ -276,9 +288,6 @@
           '",' +
           '"image data": null,' +
           '"categories": [],' +
-          '"id": "' +
-          id +
-          '",' +
           '"extra":"' +
           extra +
           '"}',
