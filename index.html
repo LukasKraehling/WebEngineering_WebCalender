@@ -371,6 +371,7 @@
       $(entryLine).append(addBtn);
       $(entryLine).append(nameField);
       $(entryLine).append(dateField);
+
       //------------------------------------------------
 
       var termin1 = $("<div/>").attr({
@@ -401,6 +402,14 @@
           $("#daybody").remove();
         }
       });
+    });
+    $(document).on("click", "#addbtn", function() {
+      if (
+        $("#datefield").val().length >= 0 &&
+        $("#datefield").val().length >= 0
+      ) {
+        //!!!need to add event here!!!
+      }
     });
   </script>
 </html>
