@@ -94,6 +94,7 @@
 
     //###Variables(var)###
     var currentDate = new Date();
+    var events = null;
 
     //###Main-Script####
     //Example
@@ -157,6 +158,7 @@
       $.ajax({
         url: SERVICE_URL + "events",
         success: function(data) {
+          events = data;
           return data;
         },
         error: function(error) {
