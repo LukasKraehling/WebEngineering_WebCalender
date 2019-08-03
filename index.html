@@ -112,6 +112,15 @@
     //###Variables(var)###
     var currentDate = new Date();
     var events = null;
+    var colors = [
+      "#425563",
+      "#80746E",
+      "#2AD2C9",
+      "#614767",
+      "#FF8D6D",
+      "#C6C9CA",
+      "#5F7A76"
+    ];
 
     //###Main-Script####
     loading = document.createElement("div");
@@ -178,6 +187,12 @@
 
       //Iterate over all events and check if they are in the current month
       $.each(events, function(i, event) {
+        var random_color = colors[Math.floor(Math.random() * colors.length)];
+        document.documentElement.style.setProperty(
+          "--random-color-appointment",
+          random_color
+        );
+        console.info(random_color);
         if (event.start.includes(searchString)) {
           eventDiv = document.createElement("div");
           $(eventDiv).addClass("eventDiv");

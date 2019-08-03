@@ -1,3 +1,7 @@
+:root {
+  --random-color-appointment: #e9e9e9;
+}
+
 body {
   background-color: #e9e9e9;
 }
@@ -53,7 +57,7 @@ body {
   width: 8px;
   height: 8px;
   display: inline-block;
-  background-color: #425563;
+  background-color: var(--random-color-appointment);
   margin-right: 10px;
 }
 
