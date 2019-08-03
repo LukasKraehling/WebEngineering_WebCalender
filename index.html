@@ -423,7 +423,12 @@
     function addHoverEvent() {
       $("#calendar > div").mouseenter(function() {
         //hover day
-        $(this).addClass("onhover");
+        var hoverBody = $("<div/>").attr({
+          id: "hoverbody"
+        });
+
+        $(hoverBody).addClass("onhover");
+        $(this).prepend(hoverBody);
         //get element the mouse hovers on
         var dayID = this.id;
         //add a div for hovered day content
@@ -517,10 +522,12 @@
         });
       });
       $("#calendar > div").mouseleave(function() {
-        $(this).removeClass("onhover");
+        $("#hoverbody").removeClass("onhover");
+        $("#hoverbody").remove();
 
         $(document).on("click", ".site", function(e) {
           if ($(e.target).closest("#daybody").length == 0) {
+          
             $("#daybody").remove();
           }
         });
