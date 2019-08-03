@@ -32,27 +32,21 @@ body {
   transform: scale(3.5);
 }
 
-/*Fucked up*/
-.event {
-  width: 10px;
-  height: 10px;
-  text-align: center;
-  vertical-align: middle;
-  font-size: 20px;
+.evBlock {
+  width: 8px;
+  height: 8px;
+  display: inline-block;
   background-color: #425563;
-  position: absolute;
+  margin-right: 10px;
 }
 
 .eventDiv {
-  background-color: red;
+  padding-left: 10px;
+  text-align: left;
+  font-size: 13px;
   vertical-align: middle;
-  margin: 0;
-  padding: 0;
-}
-
-#testblock {
-  display: inline;
-  vertical-align: middle;
+  line-height: 13px;
+  padding-bottom: 3px;
 }
 
 #daybody {

@@ -185,22 +185,17 @@
 
           var evBlock = $("<div/>").attr({
             id: "evBlock",
-            class: "event"
+            class: "evBlock"
           });
-          $(eventDiv).append(evBlock);
+
           //Add event-title to div and cut at 10 chars if needed
           if (event.title.length < 10) {
-            //eventDiv.innerHTML = event.title;
-            var testBlock = $("<div/>").attr({
-              id: "testblock"
-            });
-            $(evBlock).append("<p>" + event.title + "</p>");
-            $(testBlock).prepend(evBlock);
+            $(eventDiv).append(evBlock);
+            $(eventDiv).append(event.title);
           } else {
             //eventDiv.innerHTML = event.title.substring(0, 8) + "...";
           }
 
-          $(eventDiv).append(testBlock);
           document
             .getElementById(event.start.substring(9, 10))
             .appendChild(eventDiv);
