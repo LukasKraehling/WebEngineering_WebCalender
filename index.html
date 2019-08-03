@@ -427,8 +427,11 @@
           id: "hoverbody"
         });
 
-        $(hoverBody).addClass("onhover");
+        //$(hoverBody).addClass("onhover");
+        //$(hoverBody).hide();
         $(this).prepend(hoverBody);
+        $(hoverBody).show();
+        $(hoverBody).addClass("onhover");
         //get element the mouse hovers on
         var dayID = this.id;
         //add a div for hovered day content
@@ -522,12 +525,11 @@
         });
       });
       $("#calendar > div").mouseleave(function() {
-        $("#hoverbody").removeClass("onhover");
+        //$("#hoverbody").removeClass("onhover");
         $("#hoverbody").remove();
 
         $(document).on("click", ".site", function(e) {
           if ($(e.target).closest("#daybody").length == 0) {
-          
             $("#daybody").remove();
           }
         });
