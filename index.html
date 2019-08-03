@@ -412,10 +412,9 @@
 
     //"detailView"-button functionality
     $("#detailView").on("click", function() {
-      var id = "id";
       document.location.href = document.location.href.replace(
         "index.html",
-        "detailview.html?" + id
+        "detailview.html?" + 634
       );
     });
 
@@ -527,7 +526,6 @@
 
         $(document).on("click", ".site", function(e) {
           if ($(e.target).closest("#daybody").length == 0) {
-          
             $("#daybody").remove();
           }
         });

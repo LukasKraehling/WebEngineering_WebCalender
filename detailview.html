@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <!--Website-Title-->
-    <title>Ci-Ca-Calendar</title>
+    <title>Ci-Ca-Calendar: Detailview</title>
 
     <!--Required meta tags-->
     <meta charset="utf-8" />
@@ -44,9 +44,162 @@
   </head>
 
   <body>
-    <h1>TESTAAAA</h1>
+    <h1 id="headline">Appointment loading...</h1>
+    <button id="back" type="button" class="btn btn-primary">
+      Back to overview
+    </button>
+    <div class="table-responsive">
+      <table class="table">
+        <tr>
+          <td>Organizer:</td>
+          <td id="organizer">Loading...</td>
+        </tr>
+        <tr>
+          <td>Start:</td>
+          <td id="start">Loading...</td>
+        </tr>
+        <tr>
+          <td>End:</td>
+          <td id="end">Loading...</td>
+        </tr>
+        <tr>
+          <td>Status:</td>
+          <td id="status">Loading...</td>
+        </tr>
+        <tr>
+          <td>Location:</td>
+          <td id="location">Loading...</td>
+        </tr>
+        <tr>
+          <td>Webpage:</td>
+          <td id="webpage">Loading...</td>
+        </tr>
+        <tr>
+          <td>Categories:</td>
+          <td id="categories">Loading...</td>
+        </tr>
+        <tr>
+          <td>Extra:</td>
+          <td id="extra">Loading...</td>
+        </tr>
+      </table>
+    </div>
   </body>
 
   <!-- Detailview-Javascript-->
-  <script></script>
+  <script>
+    //###Constants###
+    const USERNAME = "18222";
+    const SERVICE_URL = "https://dhbw.cheekbyte.de/calendar/" + USERNAME + "/"; //DHBW-Usernames
+    const MONTH_NAMES = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December"
+    ];
+
+    //###Variables###
+    let id = window.location.href.substring(
+      window.location.href.indexOf(".html?") + 6,
+      window.location.href.length
+    );
+
+    //###Main-Script###
+    retrieveEvent(634);
+
+    //Function to retrieve an event from the remote-database
+    function retrieveEvent(id) {
+      $.ajax({
+        url: SERVICE_URL + "events/" + id,
+        success: function(eventData) {
+          parseData(eventData);
+          return true;
+        },
+        error: function(error) {
+          alert(
+            "Could not retrieve event: " + error.status + " " + error.statusText
+          );
+          return false;
+        }
+      });
+    }
+
+    function parseData(eventData) {
+      //Getting value for "Title"
+      document.getElementById("headline").innerHTML = eventData.title;
+
+      //Getting and checking value for "Organizer"
+      if (eventData.organizer === "null@null.com") {
+        document.getElementById("organizer").innerHTML = "None";
+        document.getElementById("organizer").classList.add("missingValue");
+      } else {
+        document.getElementById("organizer").innerHTML = eventData.organizer;
+      }
+
+      //Getting value for "Status"
+      document.getElementById("status").innerHTML = eventData.status;
+
+      //Getting and parsing value for "Start"
+      document.getElementById("start").innerHTML =
+        eventData.start.substring(0, 10) +
+        " From: " +
+        eventData.start.substring(11, eventData.start.length);
+
+      //Getting and parsing value for "End"
+      document.getElementById("end").innerHTML =
+        eventData.end.substring(0, 10) +
+        " To: " +
+        eventData.end.substring(11, eventData.end.length);
+
+      //Getting and checking value for "Location"
+      if (eventData.location === "null") {
+        document.getElementById("location").innerHTML = "None";
+        document.getElementById("location").classList.add("missingValue");
+      } else {
+        document.getElementById("location").innerHTML = eventData.location;
+      }
+
+      //Getting and checking value for "Webpage"
+      if (eventData.location === "null") {
+        document.getElementById("webpage").innerHTML = "None";
+        document.getElementById("webpage").classList.add("missingValue");
+      } else {
+        document.getElementById("webpage").innerHTML = eventData.webpage;
+      }
+
+      //Getting and checking value for "Categories"
+      if (eventData.categories.length === 0) {
+        document.getElementById("categories").innerHTML = "None";
+        document.getElementById("categories").classList.add("missingValue");
+      } else {
+        for (var category in eventData.categories) {
+          document.getElementById("categories").innerHTML += category + ",";
+        }
+      }
+
+      //Getting and checking value for "Extra"
+      if (eventData.webpage === "null") {
+        document.getElementById("extra").innerHTML = "None";
+        document.getElementById("extra").classList.add("missingValue");
+      } else {
+        document.getElementById("extra").innerHTML = eventData.webpage;
+      }
+    }
+
+    //"Back to overview"-button functionality
+    $("#back").on("click", function() {
+      document.location.href = document.location.href.replace(
+        "detailview.html?" + id,
+        "index.html"
+      );
+    });
+  </script>
 </html>
