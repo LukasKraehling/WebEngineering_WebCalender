@@ -193,6 +193,7 @@
           random_color
         );
         console.info(random_color);
+
         if (event.start.includes(searchString)) {
           eventDiv = document.createElement("div");
           $(eventDiv).addClass("eventDiv");
@@ -202,13 +203,13 @@
             id: "evBlock",
             class: "evBlock"
           });
+          $(eventDiv).append(evBlock);
 
           //Add event-title to div and cut at 10 chars if needed
           if (event.title.length < 10) {
-            $(eventDiv).append(evBlock);
             $(eventDiv).append(event.title);
           } else {
-            //eventDiv.innerHTML = event.title.substring(0, 8) + "...";
+            $(eventDiv).append(event.title.substring(0, 8) + "...");
           }
 
           document
@@ -437,18 +438,91 @@
     //Function to add Hover-Effects after reload of days
     function addHoverEvent() {
       $("#calendar > div").mouseenter(function() {
+        //get element the mouse hovers on
+        var dayID = this.id;
         //hover day
         var hoverBody = $("<div/>").attr({
           id: "hoverbody"
         });
-
-        //$(hoverBody).addClass("onhover");
-        //$(hoverBody).hide();
         $(this).prepend(hoverBody);
         $(hoverBody).show();
         $(hoverBody).addClass("onhover");
-        //get element the mouse hovers on
-        var dayID = this.id;
+        var hoverBodyHeader = $("<div/>").attr({
+          id: "hoverbodyheader"
+        });
+        if (dayID == 1 || dayID == 21 || dayID == 31) {
+          $(hoverBodyHeader).append(
+            "<p>" +
+              dayID +
+              "st " +
+              MONTH_NAMES_SHORT[currentDate.getMonth()] +
+              "</p>"
+          );
+        } else if (dayID == 2 || dayID == 22) {
+          $(hoverBodyHeader).append(
+            "<p>" +
+              dayID +
+              "nd " +
+              MONTH_NAMES_SHORT[currentDate.getMonth()] +
+              "</p>"
+          );
+        } else if (dayID == 3 || dayID == 23) {
+          $(hoverBodyHeader).append(
+            "<p>" +
+              dayID +
+              "rd " +
+              MONTH_NAMES_SHORT[currentDate.getMonth()] +
+              "</p>"
+          );
+        } else {
+          $(hoverBodyHeader).append(
+            "<p>" +
+              dayID +
+              "th " +
+              MONTH_NAMES_SHORT[currentDate.getMonth()] +
+              "</p>"
+          );
+        }
+        $(hoverBody).append(hoverBodyHeader);
+
+        //add events to hover
+        var tempID = dayID;
+        if(dayID < 10){
+          tempID = "0"+dayID;
+        }
+        if (currentDate.getMonth() + 1 < 10) {
+          searchString =
+            currentDate.getYear() +
+            1900 +
+            "-0" +
+            (currentDate.getMonth() + 1) +
+            "-" + tempID;
+        } else {
+          searchString =
+            currentDate.getYear() +
+            1900 +
+            "-" +
+            (currentDate.getMonth() + 1) +
+            "-" + tempID;
+        }
+
+        $.each(events, function(i, event) {
+        if (event.start.includes(searchString)) {
+          eventDiv = document.createElement("div");
+          $(eventDiv).addClass("eventDiv");
+          eventDiv.id = "event" + event.id;
+
+          var evBlock = $("<div/>").attr({
+            id: "evBlock",
+            class: "evBlock"
+          });
+          $(eventDiv).append(evBlock);
+                   
+          $(eventDiv).append(event.title);
+          $(hoverBody).append(eventDiv);
+        }
+      });
+
         //add a div for hovered day content
         var dayBody = $("<div/>").attr({
           id: "daybody"
@@ -520,20 +594,15 @@
 
         //------------------------------------------------
 
-        var termin1 = $("<div/>").attr({
-          id: "termin1"
-        });
         var remBtn = $("<input/>").attr({
           type: "button",
           class: "detailview apmnt btn btn-primary",
           id: "rembtn",
           value: "Remove"
         });
-        $(termin1).append(remBtn);
 
         $(dayBody).append(dayBodyHeader);
         $(dayBody).append(entryLine);
-        $(dayBody).append(termin1);
 
         $(document).on("click", "#calendar > div", function() {
           $(".content-calendar").append(dayBody);
