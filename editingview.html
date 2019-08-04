@@ -54,48 +54,114 @@
     <div class="table-responsive">
       <table class="table">
         <tr>
+          <td>Title:</td>
+          <td>
+            <input
+              type="text"
+              class="form-control"
+              id="newTitle"
+              placeholder="Loading..."
+              readonly
+            />
+          </td>
+        </tr>
+        <tr>
           <td>Organizer:</td>
           <td>
-            <form>
-              <inputs
-                type="text"
-                class="form-control"
-                id="newOrganizerValue"
-                placeholder="Loading..."
-                readonly
-              />
-            </form>
+            <input
+              type="text"
+              class="form-control"
+              id="newOrganizer"
+              placeholder="Loading..."
+              readonly
+            />
           </td>
         </tr>
         <tr>
           <td>Start:</td>
           <td>
-            <form id="startForm">
-              <input
-                type="text"
-                class="form-control"
-                id="newStartValue"
-                placeholder="Loading..."
-                readonly
-              />
-            </form>
+            <input
+              type="date"
+              class="form-control"
+              id="newStartDate"
+              placeholder="Loading..."
+              readonly
+            />
+            <input
+              type="time"
+              class="form-control"
+              id="newStartTime"
+              placeholder="Loading..."
+              readonly
+            />
           </td>
         </tr>
         <tr>
           <td>End:</td>
-          <td id="end">Loading...</td>
+          <td>
+            <input
+              type="date"
+              class="form-control"
+              id="newEndDate"
+              placeholder="Loading..."
+              readonly
+            />
+            <input
+              type="time"
+              class="form-control"
+              id="newEndTime"
+              placeholder="Loading..."
+              readonly
+            />
+          </td>
         </tr>
         <tr>
           <td>Status:</td>
-          <td id="status">Loading...</td>
+          <td>
+            <input
+              type="text"
+              class="form-control"
+              id="newStatus"
+              placeholder="Loading..."
+              readonly
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>Allday:</td>
+          <td>
+            <input
+              type="checkbox"
+              class="form-control"
+              id="newAllday"
+              onclick="return false;"
+              readonly
+            />
+          </td>
         </tr>
         <tr>
           <td>Location:</td>
-          <td id="location">Loading...</td>
+          <td>
+            <input
+              type="text"
+              class="form-control"
+              id="newLocation"
+              placeholder="Loading..."
+              readonly
+            />
+          </td>
         </tr>
         <tr>
           <td>Webpage:</td>
-          <td id="webpage">Loading...</td>
+          <td>
+            <input
+              type="text"
+              class="form-control"
+              id="newWebpage"
+              placeholder="Loading..."
+              readonly
+            />
+          </td>
         </tr>
         <tr>
           <td>Categories:</td>
@@ -103,7 +169,15 @@
         </tr>
         <tr>
           <td>Extra:</td>
-          <td id="extra">Loading...</td>
+          <td>
+            <input
+              type="text"
+              class="form-control"
+              id="newExtra"
+              placeholder="Loading..."
+              readonly
+            />
+          </td>
         </tr>
       </table>
     </div>
@@ -156,46 +230,82 @@
     }
 
     function createForm(eventData) {
-      //Getting value for "Title"
+      //etting and preparing form value for "Title"
       document.getElementById("headline").innerHTML = eventData.title;
+      $("#newTitle").attr("placeholder", eventData.title);
+      $("#newTitle").prop("readonly", false);
 
-      //Getting and checking value for "Organizer"
-      /*
+      //Getting and preparing form value for "Organizer"
       if (eventData.organizer === "null@null.com") {
-        $('#newOrganizerValue').attr('placeholder', "None");
+        $("#newOrganizer").attr("placeholder", "None");
       } else {
-        $('#newOrganizerValue').attr('placeholder',eventData.organizer);
+        $("#newOrganizer").attr("placeholder", eventData.organizer);
       }
-      $("#newOrganizerValue").prop('readonly', false);
-      */
+      $("#newOrganizer").prop("readonly", false);
 
-      //Getting value for "Status"
-      document.getElementById("status").innerHTML = eventData.status;
+      //Getting and preparing form values for "Start"
+      $("#newStartDate").attr(
+        "placeholder",
+        eventData.start.substring(8, 10) +
+          "." +
+          eventData.start.substring(5, 7) +
+          "." +
+          eventData.start.substring(0, 4)
+      );
+      $("#newStartDate").prop("readonly", false);
 
-      //Getting and parsing value for "Start"
-      
+      $("#newStartTime").attr(
+        "placeholder",
+        eventData.start.substring(11, eventData.start.length)
+      );
+      $("#newStartTime").prop("readonly", false);
 
-      //Getting and parsing value for "End"
-      document.getElementById("end").innerHTML =
-        eventData.end.substring(0, 10) +
-        " To: " +
-        eventData.end.substring(11, eventData.end.length);
+      //Getting and preparing form value for "End"
+      $("#newEndDate").attr(
+        "placeholder",
+        eventData.end.substring(8, 10) +
+          "." +
+          eventData.end.substring(5, 7) +
+          "." +
+          eventData.end.substring(0, 4)
+      );
+      $("#newEndDate").prop("readonly", false);
 
-      //Getting and checking value for "Location"
+      $("#newEndTime").attr(
+        "placeholder",
+        eventData.end.substring(11, eventData.end.length)
+      );
+      $("#newEndTime").prop("readonly", false);
+
+      //Getting and preparing form value for "Status"
+      $("#newStatus").attr("placeholder", eventData.status);
+      $("#newStatus").prop("readonly", false);
+
+      //Getting and preparing form value for "Allday"
+      if (eventData.allday) {
+        $("#newAllday").prop("checked", true);
+      } else {
+        $("#newAllday").prop("checked", false);
+      }
+      $("#newAllday").attr("onclick", "return true;");
+
+      //Getting and preparing form value for "Location"
       if (eventData.location === "null") {
-        document.getElementById("location").innerHTML = "None";
+        $("#newLocation").attr("placeholder", "None");
       } else {
-        document.getElementById("location").innerHTML = eventData.location;
+        $("#newLocation").attr("placeholder", eventData.location);
       }
+      $("#newLocation").prop("readonly", false);
 
-      //Getting and checking value for "Webpage"
-      if (eventData.location === "null") {
-        document.getElementById("webpage").innerHTML = "None";
+      //Getting and preparing form value for "Webpage"
+      if (eventData.webpage === "null") {
+        $("#newWebpage").attr("placeholder", "None");
       } else {
-        document.getElementById("webpage").innerHTML = eventData.webpage;
+        $("#newWebpage").attr("placeholder", eventData.webpage);
       }
+      $("#newWebpage").prop("readonly", false);
 
-      //Getting and checking value for "Categories"
+      //Getting and preparing form value for "Categories"
       if (eventData.categories.length === 0) {
         document.getElementById("categories").innerHTML = "None";
       } else {
@@ -204,12 +314,13 @@
         }
       }
 
-      //Getting and checking value for "Extra"
-      if (eventData.webpage === "null") {
-        document.getElementById("extra").innerHTML = "None";
+      //Getting and preparing form value for "Extra"
+      if (eventData.extra === "null") {
+        $("#newExtra").attr("placeholder", "None");
       } else {
-        document.getElementById("extra").innerHTML = eventData.webpage;
+        $("#newExtra").attr("placeholder", eventData.extra);
       }
+      $("#newExtra").prop("readonly", false);
     }
 
     //"Back to overview"-button functionality
@@ -218,6 +329,60 @@
         "editingview.html?" + id,
         "index.html"
       );
+    });
+
+    //"Submit"-button functionality
+    $("#submit").on("click", function() {
+      //Check for non-changed values
+
+      $.ajax({
+        url: SERVICE_URL + "events/" + eventId,
+        type: "PUT",
+        dataType: "json",
+        data:
+          '{"title":"' +
+          $("#newTitle").val() +
+          '",' +
+          '"location": "' +
+          $("#newLocation").val() +
+          '",' +
+          '"organizer": "' +
+          $("#newOrganizer").val() +
+          '",' +
+          '"start": "' +
+          $("#newStartDate").val() +
+          "T" +
+          $("#newStartTime").val() + //Format: 2014-12-24T18:00
+          '",' +
+          '"end": "' +
+          $("#newEndDate").val() +
+          "T" +
+          $("#newEndTime").val() + //Format: 2014-12-24T23:30
+          '",' +
+          '"status": "' +
+          $("#newStatus").val() +
+          '",' +
+          '"allday":' +
+          $("#newStatus").val() +
+          "," +
+          '"webpage": "' +
+          $("#newWebpage").val() +
+          '",' +
+          '"image data": null,' +
+          '"categories": [],' +
+          '"extra":"' +
+          $("#newExtra").val() +
+          '"}',
+        success: function(data) {
+          return true;
+        },
+        error: function(error) {
+          alert(
+            "Could not update event: " + error.status + " " + error.statusText
+          );
+          return false;
+        }
+      });
     });
   </script>
 </html>

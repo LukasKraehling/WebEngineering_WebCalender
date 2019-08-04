@@ -161,3 +161,17 @@ body {
   background-color: #0dab7f;
   border: none;
 }
+
+/*Date-Form-Placeholder-Fix*/
+input[type="date"]:before {
+  content: attr(placeholder) !important;
+  color: #7e7e7e;
+  margin-right: 0.5em;
+}
+
+/*Time-Form-Placeholder-Fix*/
+input[type="time"]:before {
+  content: attr(placeholder) !important;
+  color: #7e7e7e;
+  margin-right: 0.5em;
+}
