@@ -118,6 +118,7 @@
       "#C6C9CA",
       "#5F7A76"
     ];
+    var actualDateString;
 
     //###Main-Script####
     loading = document.createElement("div");
@@ -167,14 +168,14 @@
       //Add events to days
       //Build search string for year + month
       if (currentDate.getMonth() + 1 < 10) {
-        searchString =
+        actualDateString =
           currentDate.getYear() +
           1900 +
           "-0" +
           (currentDate.getMonth() + 1) +
           "-";
       } else {
-        searchString =
+        actualDateString =
           currentDate.getYear() +
           1900 +
           "-" +
@@ -191,7 +192,7 @@
         );
         console.info(random_color);
 
-        if (event.start.includes(searchString)) {
+        if (event.start.includes(actualDateString)) {
           eventDiv = document.createElement("div");
           $(eventDiv).addClass("eventDiv");
           eventDiv.id = "event" + event.id;
@@ -491,7 +492,7 @@
           tempID = "0" + dayID;
         }
         if (currentDate.getMonth() + 1 < 10) {
-          searchString =
+          actualDateString =
             currentDate.getYear() +
             1900 +
             "-0" +
@@ -499,7 +500,7 @@
             "-" +
             tempID;
         } else {
-          searchString =
+          actualDateString =
             currentDate.getYear() +
             1900 +
             "-" +
@@ -509,7 +510,7 @@
         }
 
         $.each(events, function(i, event) {
-          if (event.start.includes(searchString)) {
+          if (event.start.includes(actualDateString)) {
             var eventDiv = document.createElement("div");
             $(eventDiv).addClass("eventDiv");
             eventDiv.id = "event" + event.id;
@@ -587,8 +588,7 @@
         var timeField = $("<input/>").attr({
           type: "time",
           class: "detailview form-control timeInput inputf",
-          id: "timefield",
-          placeholder: "starttime"
+          id: "timefield"
         });
 
         $(entryLine).append(addBtn);
@@ -601,7 +601,7 @@
         $(dayBody).append(entryLine);
 
         $.each(events, function(i, event) {
-          if (event.start.includes(searchString)) {
+          if (event.start.includes(actualDateString)) {
             var eventDiv2 = document.createElement("div");
             $(eventDiv2).addClass("eventDiv2");
             eventDiv2.id = "event" + event.id;
@@ -623,8 +623,10 @@
               type: "button",
               class: "detailview apmnt btn btn-primary eventbtn",
               id: "editbtn",
-              value: "Edit"
+              value: "Edit",
+              evtId: event.id
             });
+
             var detailBtn = $("<input/>").attr({
               type: "button",
               class: "detailview apmnt btn btn-primary eventbtn",
@@ -636,6 +638,7 @@
             $(eventDiv2).append(editBtn);
             $(eventDiv2).append(detailBtn);
             $(dayBody).append(eventDiv2);
+            console.info(editBtn.attr("evtId"));
           }
         });
 
@@ -654,13 +657,26 @@
       });
       $(document).on("click", "#addbtn", function() {
         if ($("#timefield").val() != "" && $("#namefield").val() != "") {
-          //addEvent($("#namefield").val(), null, "null@null.com", "DATUM" + "T" + $("#timefield").val(), "DATUM" + "T" + $("#timefield").val(), "Busy", true, null, null, null, null);
+          addEvent(
+            $("#namefield").val(),
+            null,
+            "null@null.com",
+            actualDateString + "T" + $("#timefield").val(),
+            actualDateString + "T" + $("#timefield").val(),
+            "Busy",
+            false,
+            null,
+            null,
+            null,
+            null
+          );
         }
+        console.info("success");
       });
       $(document).on("click", "#editbtn", function() {
         document.location.href = document.location.href.replace(
           "index.html",
-          "editingview.html?" + 634
+          "editingview.html?" + $(this).attr("evtId")
         );
       });
     }
