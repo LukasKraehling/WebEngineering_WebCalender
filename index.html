@@ -434,9 +434,9 @@
     //Function to add Hover-Effects after reload of days
     function addHoverEvent() {
       $("#calendar > div").mouseenter(function() {
-        //get element the mouse hovers on
+        //Get element the mouse hovers on
         var dayID = this.id;
-        //hover day
+        //Hover day
         var hoverDay = $("<div/>").attr({
           id: "hoverday"
         });
@@ -485,7 +485,7 @@
           id: "hoverdaybody"
         });
 
-        //add events to hover
+        //Add events to hover
         var tempID = dayID;
         if (dayID < 10) {
           tempID = "0" + dayID;
@@ -526,7 +526,7 @@
         });
         $(hoverDay).append(hoverDayBody);
 
-        //add a div for Detailview
+        //Add a div for Detailview
         var dayBody = $("<div/>").attr({
           id: "daybody"
         });
