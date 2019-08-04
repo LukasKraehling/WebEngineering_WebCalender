@@ -296,6 +296,7 @@
           extra +
           '"}',
         success: function(data) {
+          window.location.reload(true);
           return true;
         },
         error: function(error) {
@@ -390,6 +391,7 @@
         url: SERVICE_URL + "events/" + id,
         type: "DELETE",
         success: function(data) {
+          window.location.reload(true);
           return true;
         },
         error: function(error) {
@@ -674,6 +676,7 @@
       });
       $(document).on("click", "#rembtn", function() {
         deleteEvent($(this).attr("evtId"));
+        console.info("deleted event");
       });
       $(document).on("click", "#detailbtn", function() {
         document.location.href = document.location.href.replace(
