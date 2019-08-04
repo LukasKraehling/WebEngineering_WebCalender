@@ -59,14 +59,8 @@
             Next month
           </button>
         </div>
-        <button id="viewBtn" type="button" class="btn btn-primary">
-          Change view
-        </button>
         <button id="detailview" type="button" class="btn btn-primary">
           Detailview
-        </button>
-        <button id="editingview" type="button" class="btn btn-primary">
-          Editingview
         </button>
         <div class="content-calendar">
           <div
@@ -434,14 +428,6 @@
       document.location.href = document.location.href.replace(
         "index.html",
         "detailview.html?" + 634
-      );
-    });
-
-    //"Editingview"-button functionality
-    $("#editingview").on("click", function() {
-      document.location.href = document.location.href.replace(
-        "index.html",
-        "editingview.html?" + 634
       );
     });
 

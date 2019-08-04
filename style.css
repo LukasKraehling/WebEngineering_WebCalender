@@ -18,6 +18,25 @@ body {
   text-align: center;
 }
 
+#MonthBeforeBtn {
+  margin-right: 100px;
+  width: 150px;
+}
+
+#MonthAfterBtn {
+  margin-left: 100px;
+  width: 150px;
+}
+
+#currentDate {
+  font-size: 30px;
+}
+
+#detailview {
+  display: block;
+  margin: 20px auto 15px auto;
+}
+
 /*day in month-view*/
 #calendar > div {
   width: 150px;
@@ -30,6 +49,7 @@ body {
   background-color: #e9e9e9;
   text-decoration: none;
   transition: all 0.4s ease 0s;
+  position: relative;
 }
 
 /*cloned day for hovered view*/
@@ -44,6 +64,9 @@ body {
   text-decoration: none;
   transition: all 0.4s ease 0s;
   z-index: 1;
+  position: absolute;
+  left: -8px;
+  top: -8px;
 }
 
 /*hover animation*/
@@ -56,8 +79,6 @@ body {
   -moz-transition: all 0.4s ease 0.2s;
   -o-transition: all 0.4s ease 0.2s;
   transition: all 0.4s ease 0.2s;
-  left: -8px;
-  top: -8px;
   transform: scale(3.3);
 }
 
@@ -126,6 +147,7 @@ body {
 
 #entryline {
   border-bottom: 1px solid black;
+  margin-bottom: 15px;
 }
 
 #daybodyheader p {
