@@ -441,17 +441,17 @@
         //get element the mouse hovers on
         var dayID = this.id;
         //hover day
-        var hoverBody = $("<div/>").attr({
-          id: "hoverbody"
+        var hoverDay = $("<div/>").attr({
+          id: "hoverday"
         });
-        $(this).prepend(hoverBody);
-        $(hoverBody).show();
-        $(hoverBody).addClass("onhover");
-        var hoverBodyHeader = $("<div/>").attr({
+        $(this).prepend(hoverDay);
+        $(hoverDay).show();
+        $(hoverDay).addClass("onhover");
+        var hoverDayHeader = $("<div/>").attr({
           id: "hoverbodyheader"
         });
         if (dayID == 1 || dayID == 21 || dayID == 31) {
-          $(hoverBodyHeader).append(
+          $(hoverDayHeader).append(
             "<p>" +
               dayID +
               "st " +
@@ -459,7 +459,7 @@
               "</p>"
           );
         } else if (dayID == 2 || dayID == 22) {
-          $(hoverBodyHeader).append(
+          $(hoverDayHeader).append(
             "<p>" +
               dayID +
               "nd " +
@@ -467,7 +467,7 @@
               "</p>"
           );
         } else if (dayID == 3 || dayID == 23) {
-          $(hoverBodyHeader).append(
+          $(hoverDayHeader).append(
             "<p>" +
               dayID +
               "rd " +
@@ -475,7 +475,7 @@
               "</p>"
           );
         } else {
-          $(hoverBodyHeader).append(
+          $(hoverDayHeader).append(
             "<p>" +
               dayID +
               "th " +
@@ -483,12 +483,16 @@
               "</p>"
           );
         }
-        $(hoverBody).append(hoverBodyHeader);
+        $(hoverDay).append(hoverDayHeader);
+
+        var hoverDayBody = $("<div/>").attr({
+          id: "hoverdaybody"
+        });
 
         //add events to hover
         var tempID = dayID;
-        if(dayID < 10){
-          tempID = "0"+dayID;
+        if (dayID < 10) {
+          tempID = "0" + dayID;
         }
         if (currentDate.getMonth() + 1 < 10) {
           searchString =
@@ -496,34 +500,37 @@
             1900 +
             "-0" +
             (currentDate.getMonth() + 1) +
-            "-" + tempID;
+            "-" +
+            tempID;
         } else {
           searchString =
             currentDate.getYear() +
             1900 +
             "-" +
             (currentDate.getMonth() + 1) +
-            "-" + tempID;
+            "-" +
+            tempID;
         }
 
         $.each(events, function(i, event) {
-        if (event.start.includes(searchString)) {
-          eventDiv = document.createElement("div");
-          $(eventDiv).addClass("eventDiv");
-          eventDiv.id = "event" + event.id;
+          if (event.start.includes(searchString)) {
+            eventDiv = document.createElement("div");
+            $(eventDiv).addClass("eventDiv");
+            eventDiv.id = "event" + event.id;
 
-          var evBlock = $("<div/>").attr({
-            id: "evBlock",
-            class: "evBlock"
-          });
-          $(eventDiv).append(evBlock);
-                   
-          $(eventDiv).append(event.title);
-          $(hoverBody).append(eventDiv);
-        }
-      });
+            var evBlock = $("<div/>").attr({
+              id: "evBlock",
+              class: "evBlock"
+            });
+            $(eventDiv).append(evBlock);
 
-        //add a div for hovered day content
+            $(eventDiv).append(event.title);
+            $(hoverDayBody).append(eventDiv);
+          }
+        });
+        $(hoverDay).append(hoverDayBody);
+
+        //add a div for Detailview
         var dayBody = $("<div/>").attr({
           id: "daybody"
         });
@@ -609,8 +616,7 @@
         });
       });
       $("#calendar > div").mouseleave(function() {
-        //$("#hoverbody").removeClass("onhover");
-        $("#hoverbody").remove();
+        $("#hoverday").remove();
 
         $(document).on("click", ".site", function(e) {
           if ($(e.target).closest("#daybody").length == 0) {

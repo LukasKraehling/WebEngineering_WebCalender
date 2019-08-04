@@ -6,6 +6,7 @@ body {
   background-color: #e9e9e9;
 }
 
+/*ci-ca-calendar header*/
 .header p {
   padding-top: 20px;
   height: 30%;
@@ -13,6 +14,7 @@ body {
   text-align: center;
 }
 
+/*day in month-view*/
 #calendar > div {
   width: 150px;
   height: 150px;
@@ -22,12 +24,12 @@ body {
   font-size: 20px;
   border: 8px solid #0dab7f;
   background-color: #e9e9e9;
-  position: relative;
   text-decoration: none;
   transition: all 0.4s ease 0s;
 }
 
-#hoverbody {
+/*cloned day for hovered view*/
+#hoverday {
   width: 150px;
   height: 150px;
   text-align: center;
@@ -35,12 +37,12 @@ body {
   font-size: 20px;
   border: 8px solid #0dab7f;
   background-color: #e9e9e9;
-  position: absolute;
   text-decoration: none;
   transition: all 0.4s ease 0s;
   z-index: 1;
 }
 
+/*hover animation*/
 .onhover {
   text-shadow: 0px 0px 6px rgba(255, 255, 255, 1);
   box-shadow: 0px 5px 40px 0px rgba(0, 0, 0, 0.57);
@@ -50,9 +52,22 @@ body {
   -moz-transition: all 0.4s ease 0.2s;
   -o-transition: all 0.4s ease 0.2s;
   transition: all 0.4s ease 0.2s;
-  transform: scale(3.5);
+  left: -8px;
+  top: -8px;
+  transform: scale(3.3);
 }
 
+#hoverdaybody {
+  border: 1px solid red;
+  transform: scale(calc(1 / 3.3));
+  width: 150px;
+  margin: 0;
+  padding: 0;
+  top: 0;
+  left: 0;
+}
+
+/*show the events*/
 .evBlock {
   width: 8px;
   height: 8px;
@@ -70,6 +85,7 @@ body {
   padding-bottom: 3px;
 }
 
+/*Detailview*/
 #daybody {
   display: inline-block;
   top: 0;
@@ -114,18 +130,12 @@ body {
   border-bottom: 1px solid black;
 }
 
+/*Button Styles*/
 .btn-primary,
-.btn-primary:visited {
+.btn-primary:visited,
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:focus {
   border: 0 none;
-  background-color: #0dab7f;
-}
-
-.btn-primary:hover {
-  border: 0 none;
-  background-color: #0cc792;
-}
-
-.btn-primary:active {
-  border: 0 none;
-  background-color: #09a075 !important;
+  background-color: #0dab7f !important;
 }
