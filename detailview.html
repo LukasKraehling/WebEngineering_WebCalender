@@ -165,10 +165,9 @@
 
       //Getting and parsing value for "Allday"
       if (eventData.allday === true) {
-        document.getElementById("location").innerHTML = "None";
-        document.getElementById("location").classList.add("missingValue");
+        document.getElementById("allday").innerHTML = "Yes";
       } else {
-        document.getElementById("location").innerHTML = eventData.location;
+        document.getElementById("allday").innerHTML = "No";
       }
 
       //Getting and checking value for "Location"

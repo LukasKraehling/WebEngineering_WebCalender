@@ -339,7 +339,33 @@
     //"Submit"-button functionality
     $("#submit").on("click", function() {
       //Check for non-changed values
+      if ($("#newTitle").val() === "") {
+        $("#newTitle").val() = eventData.title;
+      }
+      if ($("#newLocation").val() === "") {
+        $("#newLocation").val() = eventData.location;
+      }
+      if ($("#newOrganizer").val() === "") {
+        $("#newOrganizer").val() = eventData.organizer;
+      }
+      if ($("#newStartDate").val() === "") {
+        $("#newStartDate").val() = eventData.start;
+      }
+      if ($("#newEndDate").val() === "") {
+        $("#newEndDate").val() = eventData.end;
+      }
+      if ($("#newStatus").val() === "") {
+        $("#newStatus").val() = eventData.status;
+      }
+      if ($("#newWebpage").val() === "") {
+        $("#newWebpage").val() = eventData.webpage;
+      }
+      if ($("#newExtra").val() === "") {
+        $("#newExtra").val() = eventData.extra;
+      }
 
+      //Send AJAX-Request to update Event
+      /*
       $.ajax({
         url: SERVICE_URL + "events/" + eventId,
         type: "PUT",
@@ -368,7 +394,7 @@
           $("#newStatus").val() +
           '",' +
           '"allday":' +
-          $("#newStatus").val() +
+          $("#newAllday").is(":checked") +
           "," +
           '"webpage": "' +
           $("#newWebpage").val() +
@@ -388,6 +414,7 @@
           return false;
         }
       });
+      */
     });
   </script>
 </html>
