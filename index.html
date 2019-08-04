@@ -59,8 +59,8 @@
             Next month
           </button>
         </div>
-        <button id="detailview" type="button" class="btn btn-primary">
-          Detailview
+        <button id="eventlist" type="button" class="btn btn-primary">
+          Eventlist
         </button>
         <div class="content-calendar">
           <div
@@ -424,6 +424,13 @@
       }
       reloadDays();
       addHoverEvent();
+    });
+
+    $("#eventlist").on("click", function() {
+      document.location.href = document.location.href.replace(
+        "index.html",
+        "eventlist.html"
+      );
     });
 
     //Function to add Hover-Effects after reload of days
