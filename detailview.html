@@ -63,6 +63,10 @@
           <td id="end">Loading...</td>
         </tr>
         <tr>
+          <td>Allday:</td>
+          <td id="allday">Loading...</td>
+        </tr>
+        <tr>
           <td>Status:</td>
           <td id="status">Loading...</td>
         </tr>
@@ -158,6 +162,14 @@
         eventData.end.substring(0, 10) +
         " To: " +
         eventData.end.substring(11, eventData.end.length);
+
+      //Getting and parsing value for "Allday"
+      if (eventData.allday === true) {
+        document.getElementById("location").innerHTML = "None";
+        document.getElementById("location").classList.add("missingValue");
+      } else {
+        document.getElementById("location").innerHTML = eventData.location;
+      }
 
       //Getting and checking value for "Location"
       if (eventData.location === "null") {

@@ -210,7 +210,12 @@
     );
 
     //###Main-Script###
-    retrieveEvent(634);
+    retrieveEvent(
+      document.location.href.substring(
+        document.location.href.indexOf(".html?") + 6,
+        document.location.href.length
+      )
+    );
 
     //Function to retrieve an event from the remote-database
     function retrieveEvent(id) {
@@ -230,7 +235,7 @@
     }
 
     function createForm(eventData) {
-      //etting and preparing form value for "Title"
+      //Getting and preparing form value for "Title"
       document.getElementById("headline").innerHTML = eventData.title;
       $("#newTitle").attr("placeholder", eventData.title);
       $("#newTitle").prop("readonly", false);
