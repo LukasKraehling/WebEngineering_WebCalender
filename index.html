@@ -424,14 +424,6 @@
       addHoverEvent();
     });
 
-    //"Detailview"-button functionality
-    $("#detailview").on("click", function() {
-      document.location.href = document.location.href.replace(
-        "index.html",
-        "detailview.html?" + 634
-      );
-    });
-
     //Function to add Hover-Effects after reload of days
     function addHoverEvent() {
       $("#calendar > div").mouseenter(function() {
@@ -617,7 +609,8 @@
               type: "button",
               class: "detailview apmnt btn btn-primary eventbtn",
               id: "rembtn",
-              value: "Remove"
+              value: "Remove",
+              evtId: event.id
             });
             var editBtn = $("<input/>").attr({
               type: "button",
@@ -631,14 +624,14 @@
               type: "button",
               class: "detailview apmnt btn btn-primary eventbtn",
               id: "detailbtn",
-              value: "Details"
+              value: "Details",
+              evtId: event.id
             });
 
             $(eventDiv2).append(remBtn);
             $(eventDiv2).append(editBtn);
             $(eventDiv2).append(detailBtn);
             $(dayBody).append(eventDiv2);
-            console.info(editBtn.attr("evtId"));
           }
         });
 
@@ -677,6 +670,15 @@
         document.location.href = document.location.href.replace(
           "index.html",
           "editingview.html?" + $(this).attr("evtId")
+        );
+      });
+      $(document).on("click", "#rembtn", function() {
+        deleteEvent($(this).attr("evtId"));
+      });
+      $(document).on("click", "#detailbtn", function() {
+        document.location.href = document.location.href.replace(
+          "index.html",
+          "detailview.html?" + $(this).attr("evtId")
         );
       });
     }
