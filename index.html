@@ -524,7 +524,7 @@
 
         $.each(events, function(i, event) {
           if (event.start.includes(searchString)) {
-            eventDiv = document.createElement("div");
+            var eventDiv = document.createElement("div");
             $(eventDiv).addClass("eventDiv");
             eventDiv.id = "event" + event.id;
 
@@ -611,15 +611,47 @@
 
         //------------------------------------------------
 
-        var remBtn = $("<input/>").attr({
-          type: "button",
-          class: "detailview apmnt btn btn-primary",
-          id: "rembtn",
-          value: "Remove"
-        });
-
         $(dayBody).append(dayBodyHeader);
         $(dayBody).append(entryLine);
+
+        $.each(events, function(i, event) {
+          if (event.start.includes(searchString)) {
+            var eventDiv2 = document.createElement("div");
+            $(eventDiv2).addClass("eventDiv2");
+            eventDiv2.id = "event" + event.id;
+
+            var evBlock = $("<div/>").attr({
+              id: "evBlock",
+              class: "evBlock"
+            });
+            $(eventDiv2).append(evBlock);
+            $(eventDiv2).append(event.title);
+
+            var remBtn = $("<input/>").attr({
+              type: "button",
+              class: "detailview apmnt btn btn-primary eventbtn",
+              id: "rembtn",
+              value: "Remove"
+            });
+            var editBtn = $("<input/>").attr({
+              type: "button",
+              class: "detailview apmnt btn btn-primary eventbtn",
+              id: "editbtn",
+              value: "Edit"
+            });
+            var detailBtn = $("<input/>").attr({
+              type: "button",
+              class: "detailview apmnt btn btn-primary eventbtn",
+              id: "detailbtn",
+              value: "Details"
+            });
+
+            $(eventDiv2).append(remBtn);
+            $(eventDiv2).append(editBtn);
+            $(eventDiv2).append(detailBtn);
+            $(dayBody).append(eventDiv2);
+          }
+        });
 
         $(document).on("click", "#calendar > div", function() {
           $(".content-calendar").append(dayBody);
@@ -638,6 +670,12 @@
         if ($("#timefield").val() != "" && $("#namefield").val() != "") {
           //addEvent($("#namefield").val(), null, "null@null.com", "DATUM" + "T" + $("#timefield").val(), "DATUM" + "T" + $("#timefield").val(), "Busy", true, null, null, null, null);
         }
+      });
+      $(document).on("click", "#editbtn", function() {
+        document.location.href = document.location.href.replace(
+          "index.html",
+          "editingview.html?" + 634
+        );
       });
     }
   </script>
