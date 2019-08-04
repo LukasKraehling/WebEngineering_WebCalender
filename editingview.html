@@ -210,12 +210,7 @@
     );
 
     //###Main-Script###
-    retrieveEvent(
-      document.location.href.substring(
-        document.location.href.indexOf(".html?") + 6,
-        document.location.href.length
-      )
-    );
+    retrieveEvent(id);
 
     //Function to retrieve an event from the remote-database
     function retrieveEvent(id) {
