@@ -7,6 +7,10 @@ body {
 }
 
 /*ci-ca-calendar header*/
+#headline {
+  text-align: center;
+}
+
 .header p {
   padding-top: 20px;
   height: 30%;
@@ -136,6 +140,24 @@ body {
 .btn-primary:hover,
 .btn-primary:active,
 .btn-primary:focus {
+  color: #9b9b9b;
+}
+
+.btn-primary,
+.btn-primary:visited {
+  margin: 5px;
+  border: 0 none;
+  background-color: #0dab7f;
+}
+
+.btn-primary:hover {
+  margin: 5px;
+  border: 0 none;
+  background-color: #0cc792;
+}
+
+.btn-primary:active {
+  margin: 5px;
   border: 0 none;
   background-color: #0dab7f !important;
 }

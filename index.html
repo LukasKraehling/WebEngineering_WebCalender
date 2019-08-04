@@ -62,8 +62,11 @@
         <button id="viewBtn" type="button" class="btn btn-primary">
           Change view
         </button>
-        <button id="detailView" type="button" class="btn btn-primary">
-          DetailView
+        <button id="detailview" type="button" class="btn btn-primary">
+          Detailview
+        </button>
+        <button id="editingview" type="button" class="btn btn-primary">
+          Editingview
         </button>
         <div class="content-calendar">
           <div
@@ -426,12 +429,19 @@
       addHoverEvent();
     });
 
-    //"detailView"-button functionality
-    $("#detailView").on("click", function() {
-      var id = "id";
+    //"Detailview"-button functionality
+    $("#detailview").on("click", function() {
       document.location.href = document.location.href.replace(
         "index.html",
-        "detailview.html?" + id
+        "detailview.html?" + 634
+      );
+    });
+
+    //"Editingview"-button functionality
+    $("#editingview").on("click", function() {
+      document.location.href = document.location.href.replace(
+        "index.html",
+        "editingview.html?" + 634
       );
     });
 

@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <!--Website-Title-->
-    <title>Ci-Ca-Calendar: Detailview</title>
+    <title>Ci-Ca-Calendar: Editingview</title>
 
     <!--Required meta tags-->
     <meta charset="utf-8" />
@@ -46,17 +46,40 @@
   <body>
     <h1 id="headline">Appointment loading...</h1>
     <button id="back" type="button" class="btn btn-primary">
-      Back to overview
+      Back without saving
+    </button>
+    <button id="submit" type="button" class="btn btn-primary">
+      Submit
     </button>
     <div class="table-responsive">
       <table class="table">
         <tr>
           <td>Organizer:</td>
-          <td id="organizer">Loading...</td>
+          <td>
+            <form>
+              <inputs
+                type="text"
+                class="form-control"
+                id="newOrganizerValue"
+                placeholder="Loading..."
+                readonly
+              />
+            </form>
+          </td>
         </tr>
         <tr>
           <td>Start:</td>
-          <td id="start">Loading...</td>
+          <td>
+            <form id="startForm">
+              <input
+                type="text"
+                class="form-control"
+                id="newStartValue"
+                placeholder="Loading..."
+                readonly
+              />
+            </form>
+          </td>
         </tr>
         <tr>
           <td>End:</td>
@@ -120,7 +143,7 @@
       $.ajax({
         url: SERVICE_URL + "events/" + id,
         success: function(eventData) {
-          parseData(eventData);
+          createForm(eventData);
           return true;
         },
         error: function(error) {
@@ -132,26 +155,25 @@
       });
     }
 
-    function parseData(eventData) {
+    function createForm(eventData) {
       //Getting value for "Title"
       document.getElementById("headline").innerHTML = eventData.title;
 
       //Getting and checking value for "Organizer"
+      /*
       if (eventData.organizer === "null@null.com") {
-        document.getElementById("organizer").innerHTML = "None";
-        document.getElementById("organizer").classList.add("missingValue");
+        $('#newOrganizerValue').attr('placeholder', "None");
       } else {
-        document.getElementById("organizer").innerHTML = eventData.organizer;
+        $('#newOrganizerValue').attr('placeholder',eventData.organizer);
       }
+      $("#newOrganizerValue").prop('readonly', false);
+      */
 
       //Getting value for "Status"
       document.getElementById("status").innerHTML = eventData.status;
 
       //Getting and parsing value for "Start"
-      document.getElementById("start").innerHTML =
-        eventData.start.substring(0, 10) +
-        " From: " +
-        eventData.start.substring(11, eventData.start.length);
+      
 
       //Getting and parsing value for "End"
       document.getElementById("end").innerHTML =
@@ -162,7 +184,6 @@
       //Getting and checking value for "Location"
       if (eventData.location === "null") {
         document.getElementById("location").innerHTML = "None";
-        document.getElementById("location").classList.add("missingValue");
       } else {
         document.getElementById("location").innerHTML = eventData.location;
       }
@@ -170,7 +191,6 @@
       //Getting and checking value for "Webpage"
       if (eventData.location === "null") {
         document.getElementById("webpage").innerHTML = "None";
-        document.getElementById("webpage").classList.add("missingValue");
       } else {
         document.getElementById("webpage").innerHTML = eventData.webpage;
       }
@@ -178,7 +198,6 @@
       //Getting and checking value for "Categories"
       if (eventData.categories.length === 0) {
         document.getElementById("categories").innerHTML = "None";
-        document.getElementById("categories").classList.add("missingValue");
       } else {
         for (var category in eventData.categories) {
           document.getElementById("categories").innerHTML += category + ",";
@@ -188,7 +207,6 @@
       //Getting and checking value for "Extra"
       if (eventData.webpage === "null") {
         document.getElementById("extra").innerHTML = "None";
-        document.getElementById("extra").classList.add("missingValue");
       } else {
         document.getElementById("extra").innerHTML = eventData.webpage;
       }
@@ -197,7 +215,7 @@
     //"Back to overview"-button functionality
     $("#back").on("click", function() {
       document.location.href = document.location.href.replace(
-        "detailview.html?" + id,
+        "editingview.html?" + id,
         "index.html"
       );
     });
