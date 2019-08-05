@@ -124,6 +124,10 @@ body {
   border-bottom: 1px solid black;
 }
 
+#categoryField {
+  width: 100px;
+}
+
 .eventDiv-hover {
   padding-left: 10px;
   text-align: left;
@@ -132,6 +136,7 @@ body {
   padding-bottom: 10px;
   font-size: 20px;
   align-items: center;
+  white-space: nowrap;
 }
 
 .eventDiv-hover > div {
@@ -196,14 +201,7 @@ body {
   width: 100px;
 }
 
-#rembtn,
-#detailbtn,
-#editbtn {
-  margin-right: 10px;
-  float: right;
-}
-
-#categoryField {
+.ev #categoryField {
   width: 100px;
 }
 
@@ -243,14 +241,12 @@ body {
   line-height: 17px;
   font-size: 13px;
   vertical-align: middle;
-  margin: auto;
   margin-left: 15px;
   padding: 0 5px 0 5px;
 }
 
 /*Eventlist*/
 #eventlist-content {
-  vertical-align: middle;
   margin-right: 100px;
 }
 
@@ -259,6 +255,7 @@ body {
   line-height: 20px;
   margin-top: 5px;
   margin-bottom: 5px;
+  align-items: center;
 }
 
 #evBlockList {
@@ -271,10 +268,12 @@ body {
   height: 40px;
 }
 
-#rembtnlist,
-#detailbtnlist,
-#editbtnlist {
-  float: right;
+.eventDivList > div {
+  margin-left: 8px;
+}
+
+#rembtnlist {
+  margin-left: auto;
 }
 
 /*Button Styles*/
