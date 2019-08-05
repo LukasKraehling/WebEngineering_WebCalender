@@ -124,6 +124,10 @@ body {
   border-bottom: 1px solid black;
 }
 
+#categoryField {
+  width: 100px;
+}
+
 .eventDiv-hover {
   padding-left: 10px;
   text-align: left;
