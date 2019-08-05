@@ -26,13 +26,23 @@ body {
   text-align: center;
 }
 
-#MonthBeforeBtn {
+#monthBeforeBtn {
+  margin-left: 20px;
   margin-right: 100px;
   width: 150px;
 }
 
-#MonthAfterBtn {
+#monthAfterBtn {
   margin-left: 100px;
+  margin-right: 20px;
+  width: 150px;
+}
+
+#yearBeforeBtn {
+  width: 150px;
+}
+
+#yearAfterBtn {
   width: 150px;
 }
 
@@ -119,7 +129,7 @@ body {
   padding-bottom: 3px;
 }
 
-/*Detailview*/
+/*Detailview and Editingview*/
 #daybody {
   display: inline-block;
   top: 0;
@@ -151,8 +161,15 @@ body {
   margin-top: 5px;
 }
 
+#namefield {
+  width: 135px;
+}
 #timefield {
-  width: 110px;
+  width: 100px;
+}
+
+#categoryField {
+  width: 100px;
 }
 
 #entryline {

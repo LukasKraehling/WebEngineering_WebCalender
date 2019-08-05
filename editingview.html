@@ -44,9 +44,6 @@
   </head>
 
   <body>
-    <!--<div class="header">
-      <p>Ci-Ca-Calender: Eventlist</p>
-    </div> statt h1-->
     <h1 id="headline">Appointment loading...</h1>
     <div class="menu d-flex justify-content-left flex-rows">
       <button id="back" type="button" class="btn btn-primary back">
@@ -173,7 +170,21 @@
         </tr>
         <tr>
           <td>Categories:</td>
-          <td id="categories">Loading...</td>
+          <td>
+            <div id="categories">Loading...</div>
+            <div>
+              <select class="form-control" id="deleteCategory"></select>
+              <button id="deleteCat" type="button" class="btn btn-primary">
+                Delete
+              </button>
+            </div>
+            <div>
+              <select class="form-control" id="addCategory"></select>
+              <button id="addCat" type="button" class="btn btn-primary">
+                Add Category
+              </button>
+            </div>
+          </td>
         </tr>
         <tr>
           <td>Extra:</td>
@@ -212,6 +223,7 @@
     ];
 
     //###Variables###
+    var categories = null;
     let id = window.location.href.substring(
       window.location.href.indexOf(".html?") + 6,
       window.location.href.length
@@ -219,6 +231,7 @@
 
     //###Main-Script###
     retrieveEvent(id);
+    getCategories();
 
     //Function to retrieve an event from the remote-database
     function retrieveEvent(id) {
@@ -316,9 +329,19 @@
       //Getting and preparing form value for "Categories"
       if (eventData.categories.length === 0) {
         document.getElementById("categories").innerHTML = "None";
+        document.getElementById("categories").classList.add("missingValue");
       } else {
-        for (var category in eventData.categories) {
-          document.getElementById("categories").innerHTML += category + ",";
+        document.getElementById("categories").innerHTML = "";
+
+        for (var category of eventData.categories) {
+          document.getElementById("categories").innerHTML +=
+            category.name + ",";
+
+            $("#deleteCategory").append(
+            $("<option>")
+              .attr("value", category.id)
+              .text(category.name)
+          );
         }
       }
 
@@ -331,6 +354,29 @@
       $("#newExtra").prop("readonly", false);
     }
 
+    //Function to get all categories from the remote-database
+    function getCategories() {
+      $.ajax({
+        url: SERVICE_URL + "categories",
+        success: function(data) {
+          categories = data;
+          for (var category of categories) {
+          $("#addCategory").append(
+            $("<option>")
+              .attr("value", category.id)
+              .text(category.name)
+          );
+          }
+        },
+        error: function(error) {
+          alert(
+            "Could not get categories: " + error.status + " " + error.statusText
+          );
+          return false;
+        }
+      });
+    }
+
     //"Back to overview"-button functionality
     $("#back").on("click", function() {
       document.location.href = document.location.href.replace(
@@ -339,11 +385,18 @@
       );
     });
 
+    //"Back to Eventlist"-button functionality
     $("#back2").on("click", function() {
       document.location.href = document.location.href.replace(
         "editingview.html?" + id,
         "eventlist.html"
       );
+    });
+
+    //"Delete(Category)"-button functionality TODOO
+    $("#deleteCat").on("click", function() {
+      $("#deleteCategory").val();
+
     });
 
     //"Submit"-button functionality

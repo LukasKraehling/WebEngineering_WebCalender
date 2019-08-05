@@ -96,9 +96,6 @@
         url: SERVICE_URL + "events",
         success: function(data) {
           events = data;
-          //reloadDays(); //Start with current date
-          //addHoverEvent();
-          console.info(events);
           loadEvents();
         },
         error: function(error) {
@@ -127,8 +124,12 @@
         });
         $(eventDiv).append(evBlock);
 
-        $(eventDiv).append(event.start);
-        $(eventDiv).append("; " + event.title);
+        $(eventDiv).append(
+          event.start.substring(0, 10) +
+            "@" +
+            event.start.substring(11, event.start.length)
+        );
+        $(eventDiv).append(": " + event.title);
 
         var remBtn = $("<input/>").attr({
           type: "button",
