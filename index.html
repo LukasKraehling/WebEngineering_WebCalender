@@ -105,11 +105,7 @@
       "Nov",
       "Dec"
     ];
-
-    //###Variables(var)###
-    var currentDate = new Date();
-    var events = null;
-    var colors = [
+    const COLORS = [
       "#425563",
       "#80746E",
       "#2AD2C9",
@@ -118,16 +114,40 @@
       "#C6C9CA",
       "#5F7A76"
     ];
-    var actualDateString;
+
+    //###Variables(var)###
+    var currentDate = new Date(); //gets the current month and year of the actual date
+    var events = null;
+    var actualDateString; //gets the day, month and year of the date the user is adding/editing/removing events
 
     //###Main-Script####
-    loading = document.createElement("div");
+    loading = document.createElement("div"); //?
     loading.innerHTML = "Loading...";
     document.getElementById("calendar").appendChild(loading);
 
     getEventsAndReload();
 
     //###Functions###
+
+    //Function to get all events from the remote-database
+    //Example: addEvent("test", null, "lukas.K98@web.de", "2014-12-24T00:00", "2014-12-25T23:59", "Busy", "true", null, null, null, null);
+    function getEventsAndReload() {
+      $.ajax({
+        url: SERVICE_URL + "events",
+        success: function(data) {
+          events = data;
+          reloadDays(); //Start with current date
+          addHoverEvent();
+        },
+        error: function(error) {
+          alert(
+            "Could not get events: " + error.status + " " + error.statusText
+          );
+          return false;
+        }
+      });
+    }
+
     //Function to create as many day-divs as the current month has and overrides the old day-divs
     function reloadDays() {
       var tmpEvt;
@@ -146,6 +166,7 @@
         index++
       ) {
         day = document.createElement("div");
+        //for the right naming of the days
         if (index == 1 || index == 21 || index == 31) {
           day.innerHTML =
             index + "st " + MONTH_NAMES_SHORT[currentDate.getMonth()];
@@ -159,14 +180,13 @@
           day.innerHTML =
             index + "th " + MONTH_NAMES_SHORT[currentDate.getMonth()];
         }
-
         day.id = index;
 
         document.getElementById("calendar").appendChild(day);
       }
 
       //Add events to days
-      //Build search string for year + month
+      //Build string including year + month for searching
       if (currentDate.getMonth() + 1 < 10) {
         actualDateString =
           currentDate.getYear() +
@@ -185,12 +205,14 @@
 
       //Iterate over all events and check if they are in the current month
       $.each(events, function(i, event) {
+        //get a random (individual) color for each event
         var random_color = colors[Math.floor(Math.random() * colors.length)];
         document.documentElement.style.setProperty(
           "--random-color-appointment",
           random_color
         );
 
+        //check the events at specific date given in actualDateString
         if (event.start.includes(actualDateString)) {
           eventDiv = document.createElement("div");
           $(eventDiv).addClass("eventDiv");
@@ -225,25 +247,6 @@
     //Function to give back the number of days that the given month has
     function daysInMonth(month, year) {
       return new Date(year, month, 0).getDate();
-    }
-
-    //Function to get all events from the remote-database
-    //Example: addEvent("test", null, "lukas.K98@web.de", "2014-12-24T00:00", "2014-12-25T23:59", "Busy", "true", null, null, null, null);
-    function getEventsAndReload() {
-      $.ajax({
-        url: SERVICE_URL + "events",
-        success: function(data) {
-          events = data;
-          reloadDays(); //Start with current date
-          addHoverEvent();
-        },
-        error: function(error) {
-          alert(
-            "Could not get events: " + error.status + " " + error.statusText
-          );
-          return false;
-        }
-      });
     }
 
     //Function to add an event to the remote-database !!!TODO!!! (Fix image-Data and categories)
@@ -390,6 +393,7 @@
         url: SERVICE_URL + "events/" + id,
         type: "DELETE",
         success: function(data) {
+          //reload page to update the events
           window.location.reload(true);
           return true;
         },
@@ -403,34 +407,6 @@
     }
 
     //###JQuery Code###
-    //"Month after"-button functionality
-    $("#MonthAfterBtn").on("click", function() {
-      if (currentDate.getMonth() == 11) {
-        currentDate = new Date(currentDate.getFullYear() + 1, 0, 1);
-      } else {
-        currentDate.setMonth(currentDate.getMonth() + 1);
-      }
-      reloadDays();
-      addHoverEvent();
-    });
-
-    //"Month before"-button functionality
-    $("#MonthBeforeBtn").on("click", function() {
-      if (currentDate.getMonth() == 0) {
-        currentDate = new Date(currentDate.getFullYear() - 1, 11, 1);
-      } else {
-        currentDate.setMonth(currentDate.getMonth() - 1);
-      }
-      reloadDays();
-      addHoverEvent();
-    });
-
-    $("#eventlist").on("click", function() {
-      document.location.href = document.location.href.replace(
-        "index.html",
-        "eventlist.html"
-      );
-    });
 
     //Function to add Hover-Effects after reload of days
     function addHoverEvent() {
@@ -656,6 +632,8 @@
           }
         });
       });
+
+      //Buttons
       $(document).on("click", "#addbtn", function() {
         if ($("#timefield").val() != "" && $("#namefield").val() != "") {
           addEvent(
@@ -687,6 +665,7 @@
           );
         }
       });
+
       $(document).on("click", "#editbtn", function() {
         document.location.href = document.location.href.replace(
           "index.html",
