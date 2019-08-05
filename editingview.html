@@ -468,7 +468,10 @@
           $("#newExtra").val() +
           '"}',
         success: function(data) {
-          window.location.reload(true);
+          document.location.href = document.location.href.replace(
+            "editingview",
+            "detailview"
+          );
           return true;
         },
         error: function(error) {
