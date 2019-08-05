@@ -317,25 +317,21 @@
       }
       $("#newWebpage").prop("readonly", false);
 
-      //Getting and preparing form value for "Categories"
-      if (eventData.categories.length === 0) {
-        document.getElementById("categories").innerHTML = "None";
-        document.getElementById("categories").classList.add("missingValue");
-      } else {
-        document.getElementById("categories").innerHTML = "";
-        for (category of categories) {
-          $("#categories").append(
-            $(document.createElement("input")).attr({
-              id: "cat" + category.id,
-              name: category.name,
-              value: category.name,
-              class: "form-control catCheckbox",
-              type: "checkbox"
-            })
-          );
-          $("#categories").append(document.createTextNode(category.name));
-        }
+      //Adding checkboxes for every Category
+      document.getElementById("categories").innerHTML = "";
+      for (category of categories) {
+        $("#categories").append(
+          $(document.createElement("input")).attr({
+            id: "cat" + category.id,
+            name: category.name,
+            value: category.name,
+            class: "form-control catCheckbox",
+            type: "checkbox"
+          })
+        );
+        $("#categories").append(document.createTextNode(category.name));
 
+        //Pre-Check all assigned categories
         for (category of eventData.categories) {
           $("#cat" + category.id).prop("checked", true);
         }
@@ -430,44 +426,6 @@
       }
       newCategories = newCategories.substring(0, newCategories.length - 1);
 
-      var string =
-        '{"title":"' +
-        $("#newTitle").val() +
-        '",' +
-        '"location": "' +
-        $("#newLocation").val() +
-        '",' +
-        '"organizer": "' +
-        $("#newOrganizer").val() +
-        '",' +
-        '"start": "' +
-        $("#newStartDate").val() +
-        "T" +
-        $("#newStartTime").val() + //Format: 2014-12-24T18:00
-        '",' +
-        '"end": "' +
-        $("#newEndDate").val() +
-        "T" +
-        $("#newEndTime").val() + //Format: 2014-12-24T23:30
-        '",' +
-        '"status": "' +
-        $("#newStatus").val() +
-        '",' +
-        '"allday":' +
-        $("#newAllday").is(":checked") +
-        "," +
-        '"webpage": "' +
-        $("#newWebpage").val() +
-        '",' +
-        '"image data": null,' +
-        '"categories": [' +
-        newCategories +
-        "]," +
-        '"extra":"' +
-        $("#newExtra").val() +
-        '"}';
-
-      console.log(string);
       //Send AJAX-Request to update Event
       $.ajax({
         url: SERVICE_URL + "events/" + id,

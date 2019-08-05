@@ -205,8 +205,17 @@
         document.getElementById("categories").innerHTML = "";
         for (var category of eventData.categories) {
           document.getElementById("categories").innerHTML +=
-            category.name + ",";
+            category.name + ", ";
         }
+        //Delete last comma
+        document.getElementById(
+          "categories"
+        ).innerHTML = document
+          .getElementById("categories")
+          .innerHTML.substring(
+            0,
+            document.getElementById("categories").innerHTML.length - 2
+          );
       }
 
       //Getting and checking value for "Extra"
