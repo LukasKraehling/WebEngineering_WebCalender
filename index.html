@@ -570,9 +570,18 @@
             });
             $(eventDiv).append(evBlock);
 
-            $(eventDiv).append("<div>" + event.title + "</div>");
-            $(eventDiv).append("<div>" + event.start + "</div>");
-            $(eventDiv).append("<div>" + event.organizer + "</div>");
+            $(eventDiv).append("<div>" + event.title + " - </div>");
+            $(eventDiv).append(
+              "<div>" +
+                "Starttime: " +
+                event.start.substring(11, event.start.length) +
+                " - </div>"
+            );
+            if (event.organizer === "null@null.com") {
+              $(eventDiv).append("<div>" + "No organizer set" + "</div>");
+            } else {
+              $(eventDiv).append("<div>" + event.organizer + "</div>");
+            }
             $(hoverDayBody).append(eventDiv);
           }
         });

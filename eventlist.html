@@ -115,7 +115,9 @@
           random_color
         );
         var eventDiv = document.createElement("div");
-        $(eventDiv).addClass("eventDivList");
+        $(eventDiv).addClass(
+          "menu d-flex justify-content-left flex-rows eventDivList"
+        );
         eventDiv.id = "event" + event.id;
 
         var evBlock = $("<div/>").attr({
@@ -125,11 +127,33 @@
         $(eventDiv).append(evBlock);
 
         $(eventDiv).append(
-          event.start.substring(0, 10) +
-            "@" +
-            event.start.substring(11, event.start.length)
+          "<div>" +
+            "From  " +
+            event.start.substring(0, 10) +
+            " (" +
+            event.start.substring(11, event.start.length) +
+            ")" +
+            "</div>"
         );
-        $(eventDiv).append(": " + event.title);
+
+        $(eventDiv).append(
+          "<div>" +
+            " to  " +
+            event.end.substring(0, 10) +
+            " (" +
+            event.end.substring(11, event.end.length) +
+            ")" +
+            " --- " +
+            "</div>"
+        );
+
+        $(eventDiv).append("<div>" + event.title + " --- </div>");
+
+        if (event.organizer === "null@null.com") {
+          $(eventDiv).append("<div>" + "No organizer set" + "</div>");
+        } else {
+          $(eventDiv).append("<div>" + event.organizer + "</div>");
+        }
 
         var remBtn = $("<input/>").attr({
           type: "button",
