@@ -51,15 +51,176 @@
     <button id="back" type="button" class="btn btn-primary">
       Back to month view
     </button>
+    <div class="entrylineList">
+      <button id="addbtnlist" class="detailview btn btn-primary">
+        Add
+      </button>
+      <input
+        type="text"
+        class="detailview form-control inputf"
+        id="namefield"
+        placeholder="Appointment Name"
+      />
+      <input
+        type="date"
+        class="detailview form-control inputf"
+        id="datefield"
+      />
+      <input
+        type="time"
+        class="detailview form-control inputf"
+        id="timefield"
+      />
+    </div>
     <div id="eventlist-content"></div>
   </body>
 
   <script>
+    var events = null;
+    var colors = [
+      "#425563",
+      "#80746E",
+      "#2AD2C9",
+      "#614767",
+      "#FF8D6D",
+      "#C6C9CA",
+      "#5F7A76"
+    ];
+    const USERNAME = "18222";
+    const SERVICE_URL = "https://dhbw.cheekbyte.de/calendar/" + USERNAME + "/"; //DHBW-Usernames
+
+    getEventsAndReload();
+
+    function getEventsAndReload() {
+      $.ajax({
+        url: SERVICE_URL + "events",
+        success: function(data) {
+          events = data;
+          //reloadDays(); //Start with current date
+          //addHoverEvent();
+          console.info(events);
+          loadEvents();
+        },
+        error: function(error) {
+          alert(
+            "Could not get events: " + error.status + " " + error.statusText
+          );
+          return false;
+        }
+      });
+    }
+
+    function loadEvents() {
+      $.each(events, function(i, event) {
+        var random_color = colors[Math.floor(Math.random() * colors.length)];
+        document.documentElement.style.setProperty(
+          "--random-color-appointment",
+          random_color
+        );
+        var eventDiv = document.createElement("div");
+        $(eventDiv).addClass("eventDivList");
+        eventDiv.id = "event" + event.id;
+
+        var evBlock = $("<div/>").attr({
+          id: "evBlockList",
+          class: "evBlock"
+        });
+        $(eventDiv).append(evBlock);
+
+        $(eventDiv).append(event.start);
+        $(eventDiv).append("; " + event.title);
+        $("#eventlist-content").append(eventDiv);
+      });
+    }
+
+    function addEvent(
+      title,
+      location,
+      organizer, //Mandatory
+      start, //Mandatory
+      end, //Mandatory
+      status, //Mandatory
+      allday, //Mandatory
+      webpage,
+      imageData,
+      categories,
+      extra
+    ) {
+      $.ajax({
+        url: SERVICE_URL + "events",
+        type: "POST",
+        dataType: "json",
+        data:
+          '{"title":"' +
+          title +
+          '",' +
+          '"location": "' +
+          location +
+          '",' +
+          '"organizer": "' +
+          organizer +
+          '",' +
+          '"start": "' +
+          start + //Format: 2014-12-24T18:00
+          '",' +
+          '"end": "' +
+          end + //Format: 2014-12-24T23:30
+          '",' +
+          '"status": "' +
+          status +
+          '",' +
+          '"allday":' +
+          allday +
+          "," +
+          '"webpage": "' +
+          webpage +
+          '",' +
+          '"image data": null,' +
+          '"categories": [],' +
+          '"extra":"' +
+          extra +
+          '"}',
+        success: function(data) {
+          window.location.reload(true);
+          return true;
+        },
+        error: function(error) {
+          alert(
+            "Could not add event: " + error.status + " " + error.statusText
+          );
+          return false;
+        }
+      });
+    }
+
+    //Buttons
     $("#back").on("click", function() {
       document.location.href = document.location.href.replace(
         "eventlist.html",
         "index.html"
       );
+    });
+    $(document).on("click", "#addbtnlist", function() {
+      if (
+        $("#timefield").val() != "" &&
+        $("#namefield").val() != "" &&
+        $("#datefield").val() != ""
+      ) {
+        addEvent(
+          $("#namefield").val(),
+          null,
+          "null@null.com",
+          $("#datefield").val() + "T" + $("#timefield").val(),
+          $("#datefield").val() + "T" + $("#timefield").val(),
+          "Busy",
+          false,
+          null,
+          null,
+          null,
+          null
+        );
+      }
+      console.info("success");
     });
   </script>
 </html>

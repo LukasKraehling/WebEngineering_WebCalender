@@ -108,7 +108,8 @@ body {
   margin-right: 10px;
 }
 
-.eventDiv {
+.eventDiv,
+.eventDivList {
   padding-left: 10px;
   text-align: left;
   font-size: 13px;
@@ -132,6 +133,7 @@ body {
   background-color: #e9e9e9;
   font-family: "Comic Sans MS", cursive, sans-serif;
   z-index: 2;
+  overflow: auto;
 }
 
 .detailview {
@@ -178,6 +180,28 @@ body {
   margin: auto;
   margin-left: 15px;
   padding: 0 5px 0 5px;
+}
+
+/*Eventlist*/
+#eventlist-content {
+  vertical-align: middle;
+}
+
+.eventDivList {
+  font-size: 20px;
+  line-height: 20px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+#evBlockList {
+  height: 12px;
+  width: 12px;
+}
+
+#addbtnlist {
+  width: 60px;
+  height: 40px;
 }
 
 /*Button Styles*/
