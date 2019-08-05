@@ -219,6 +219,24 @@
           null,
           null
         );
+      } else if (
+        $("#timefield").val() == "" &&
+        $("#namefield").val() != "" &&
+        $("#datefield").val() != ""
+      ) {
+        addEvent(
+          $("#namefield").val(),
+          null,
+          "null@null.com",
+          $("#datefield").val() + "T" + "00:00",
+          $("#datefield").val() + "T" + "23:59",
+          "Busy",
+          true,
+          null,
+          null,
+          null,
+          null
+        );
       }
       console.info("success");
     });

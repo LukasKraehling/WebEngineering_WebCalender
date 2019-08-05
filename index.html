@@ -671,8 +671,21 @@
             null,
             null
           );
+        } else if ($("#timefield").val() == "" && $("#namefield").val() != "") {
+          addEvent(
+            $("#namefield").val(),
+            null,
+            "null@null.com",
+            actualDateString + "T" + "00:00",
+            actualDateString + "T" + "23:59",
+            "Busy",
+            true,
+            null,
+            null,
+            null,
+            null
+          );
         }
-        console.info("success");
       });
       $(document).on("click", "#editbtn", function() {
         document.location.href = document.location.href.replace(
