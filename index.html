@@ -115,6 +115,7 @@
     //###Variables(var)###
     var currentDate = new Date();
     var events = null;
+    var categories = null;
     var colors = [
       "#425563",
       "#80746E",
@@ -132,6 +133,7 @@
     document.getElementById("calendar").appendChild(loading);
 
     getEventsAndReload();
+    getCategories();
 
     //###Functions###
     //Function to create as many day-divs as the current month has and overrides the old day-divs
@@ -252,7 +254,7 @@
       });
     }
 
-    //Function to add an event to the remote-database !!!TODO!!! (Fix image-Data and categories)
+    //Function to add an event to the remote-database !!!TODO!!! (Fix image-Data)
     function addEvent(
       title,
       location,
@@ -296,7 +298,9 @@
           webpage +
           '",' +
           '"image data": null,' +
-          '"categories": [],' +
+          '"categories": [' +
+          categories +
+          "]," +
           '"extra":"' +
           extra +
           '"}',
@@ -329,7 +333,7 @@
       });
     }
 
-    //Function to update an event at the remote-database !!!TODO!!! (Fix image-Data and categories)
+    //Function to update an event at the remote-database !!!TODO!!! (Fix image-Data)
     function updateEvent(
       eventId,
       title,
@@ -374,7 +378,9 @@
           webpage +
           '",' +
           '"image data": null,' +
-          '"categories": [],' +
+          '"categories": [' +
+          categories +
+          "]," +
           '"extra":"' +
           extra +
           '"}',
@@ -402,6 +408,42 @@
         error: function(error) {
           alert(
             "Could not delete event: " + error.status + " " + error.statusText
+          );
+          return false;
+        }
+      });
+    }
+
+    //Function to get all categories from the remote-database
+    function getCategories() {
+      $.ajax({
+        url: SERVICE_URL + "categories",
+        success: function(data) {
+          categories = data;
+        },
+        error: function(error) {
+          alert(
+            "Could not get categories: " + error.status + " " + error.statusText
+          );
+          return false;
+        }
+      });
+    }
+
+    //Function to add a category to the remote-database
+    function addCategory(name) {
+      $.ajax({
+        url: SERVICE_URL + "categories",
+        type: "POST",
+        dataType: "json",
+        data: '{"name":"' + name + '"}',
+        success: function(data) {
+          window.location.reload(true);
+          return true;
+        },
+        error: function(error) {
+          alert(
+            "Could not add event: " + error.status + " " + error.statusText
           );
           return false;
         }
@@ -603,17 +645,35 @@
           type: "text",
           class: "detailview form-control inputf",
           id: "namefield",
-          placeholder: "Appointment Name"
+          placeholder: "Event Name"
         });
         var timeField = $("<input/>").attr({
           type: "time",
           class: "detailview form-control timeInput inputf",
           id: "timefield"
         });
+        var categoryField = $("<select>").attr({
+          class: "detailview form-control",
+          id: "categoryField"
+        });
+
+        categoryField.append(
+          $("<option>")
+            .attr("value", "None")
+            .text("None")
+        );
+        $.each(categories, function(i, category) {
+          categoryField.append(
+            $("<option>")
+              .attr("value", category.id)
+              .text(category.name)
+          );
+        });
 
         $(entryLine).append(addBtn);
         $(entryLine).append(nameField);
         $(entryLine).append(timeField);
+        $(entryLine).append(categoryField);
 
         //------------------------------------------------
 
@@ -677,7 +737,11 @@
         });
       });
       $(document).on("click", "#addbtn", function() {
-        if ($("#timefield").val() != "" && $("#namefield").val() != "") {
+        if (
+          $("#timefield").val() != "" &&
+          $("#namefield").val() != "" &&
+          $("#categoryField").val() != "None"
+        ) {
           addEvent(
             $("#namefield").val(),
             null,
@@ -688,10 +752,14 @@
             false,
             null,
             null,
-            null,
+            '{"id":' + $("#categoryField").val() + "}",
             null
           );
-        } else if ($("#timefield").val() == "" && $("#namefield").val() != "") {
+        } else if (
+          $("#timefield").val() == "" &&
+          $("#namefield").val() != "" &&
+          $("#categoryField").val() != "None"
+        ) {
           addEvent(
             $("#namefield").val(),
             null,
@@ -702,7 +770,43 @@
             true,
             null,
             null,
+            '{"id":' + $("#categoryField").val() + "}",
+            null
+          );
+        } else if (
+          $("#timefield").val() == "" &&
+          $("#namefield").val() != "" &&
+          $("#categoryField").val() == "None"
+        ) {
+          addEvent(
+            $("#namefield").val(),
             null,
+            "null@null.com",
+            actualDateString + "T" + "00:00",
+            actualDateString + "T" + "23:59",
+            "Busy",
+            true,
+            null,
+            null,
+            "",
+            null
+          );
+        } else if (
+          $("#timefield").val() != "" &&
+          $("#namefield").val() != "" &&
+          $("#categoryField").val() == "None"
+        ) {
+          addEvent(
+            $("#namefield").val(),
+            null,
+            "null@null.com",
+            actualDateString + "T" + "00:00",
+            actualDateString + "T" + "23:59",
+            "Busy",
+            false,
+            null,
+            null,
+            "",
             null
           );
         }

@@ -129,7 +129,7 @@ body {
   padding-bottom: 3px;
 }
 
-/*Detailview*/
+/*Detailview and Editingview*/
 #daybody {
   display: inline-block;
   top: 0;
@@ -161,8 +161,15 @@ body {
   margin-top: 5px;
 }
 
+#namefield {
+  width: 135px;
+}
 #timefield {
-  width: 110px;
+  width: 100px;
+}
+
+#categoryField {
+  width: 100px;
 }
 
 #entryline {

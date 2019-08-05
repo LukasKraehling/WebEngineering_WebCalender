@@ -202,8 +202,10 @@
         document.getElementById("categories").innerHTML = "None";
         document.getElementById("categories").classList.add("missingValue");
       } else {
-        for (var category in eventData.categories) {
-          document.getElementById("categories").innerHTML += category + ",";
+        document.getElementById("categories").innerHTML = "";
+        for (var category of eventData.categories) {
+          document.getElementById("categories").innerHTML +=
+            category.name + ",";
         }
       }
 
