@@ -78,7 +78,7 @@
     </div>
   </body>
 
-  <!-- Calendar-Javascript-->
+  <!-- Calendar-Javascript & ###JQuery Code###-->
   <script>
     //###Constants###
     const USERNAME = "18222";
@@ -478,50 +478,6 @@
       });
     }
 
-    //###JQuery Code###
-    //"Month after"-button functionality
-    $("#monthAfterBtn").on("click", function() {
-      if (currentDate.getMonth() == 11) {
-        currentDate = new Date(currentDate.getFullYear() + 1, 0, 1);
-      } else {
-        currentDate.setMonth(currentDate.getMonth() + 1);
-      }
-      reloadDays();
-      addHoverEvent();
-    });
-
-    //"Month before"-button functionality
-    $("#monthBeforeBtn").on("click", function() {
-      if (currentDate.getMonth() == 0) {
-        currentDate = new Date(currentDate.getFullYear() - 1, 11, 1);
-      } else {
-        currentDate.setMonth(currentDate.getMonth() - 1);
-      }
-      reloadDays();
-      addHoverEvent();
-    });
-
-    //"Year after"-button functionality
-    $("#yearAfterBtn").on("click", function() {
-      currentDate.setYear(currentDate.getYear() + 1900 + 1);
-      reloadDays();
-      addHoverEvent();
-    });
-
-    //"Year before"-button functionality
-    $("#yearBeforeBtn").on("click", function() {
-      currentDate.setYear(currentDate.getYear() + 1900 - 1);
-      reloadDays();
-      addHoverEvent();
-    });
-
-    $("#eventlist").on("click", function() {
-      document.location.href = document.location.href.replace(
-        "index.html",
-        "eventlist.html"
-      );
-    });
-
     //Function to add Hover-Effects after reload of days
     function addHoverEvent() {
       $("#calendar > div").mouseenter(function() {
@@ -764,100 +720,142 @@
           }
         });
       });
-
-      //Buttons
-      $(document).on("click", "#addbtn", function() {
-        if (
-          $("#timefield").val() != "" &&
-          $("#namefield").val() != "" &&
-          $("#categoryField").val() != "None"
-        ) {
-          addEvent(
-            $("#namefield").val(),
-            null,
-            "null@null.com",
-            actualDateString + "T" + $("#timefield").val(),
-            actualDateString + "T" + $("#timefield").val(),
-            "Busy",
-            false,
-            null,
-            null,
-            '{"id":' + $("#categoryField").val() + "}",
-            null
-          );
-        } else if (
-          $("#timefield").val() == "" &&
-          $("#namefield").val() != "" &&
-          $("#categoryField").val() != "None"
-        ) {
-          addEvent(
-            $("#namefield").val(),
-            null,
-            "null@null.com",
-            actualDateString + "T" + "00:00",
-            actualDateString + "T" + "23:59",
-            "Busy",
-            true,
-            null,
-            null,
-            '{"id":' + $("#categoryField").val() + "}",
-            null
-          );
-        } else if (
-          $("#timefield").val() == "" &&
-          $("#namefield").val() != "" &&
-          $("#categoryField").val() == "None"
-        ) {
-          addEvent(
-            $("#namefield").val(),
-            null,
-            "null@null.com",
-            actualDateString + "T" + "00:00",
-            actualDateString + "T" + "23:59",
-            "Busy",
-            true,
-            null,
-            null,
-            "",
-            null
-          );
-        } else if (
-          $("#timefield").val() != "" &&
-          $("#namefield").val() != "" &&
-          $("#categoryField").val() == "None"
-        ) {
-          addEvent(
-            $("#namefield").val(),
-            null,
-            "null@null.com",
-            actualDateString + "T" + "00:00",
-            actualDateString + "T" + "23:59",
-            "Busy",
-            false,
-            null,
-            null,
-            "",
-            null
-          );
-        }
-      });
-
-      $(document).on("click", "#editbtn", function() {
-        document.location.href = document.location.href.replace(
-          "index.html",
-          "editingview.html?" + $(this).attr("evtId")
-        );
-      });
-      $(document).on("click", "#rembtn", function() {
-        deleteEvent($(this).attr("evtId"));
-        console.info("deleted event");
-      });
-      $(document).on("click", "#detailbtn", function() {
-        document.location.href = document.location.href.replace(
-          "index.html",
-          "detailview.html?" + $(this).attr("evtId")
-        );
-      });
     }
+
+    //Buttons
+    //"Month after"-button functionality
+    $("#monthAfterBtn").on("click", function() {
+      if (currentDate.getMonth() == 11) {
+        currentDate = new Date(currentDate.getFullYear() + 1, 0, 1);
+      } else {
+        currentDate.setMonth(currentDate.getMonth() + 1);
+      }
+      reloadDays();
+      addHoverEvent();
+    });
+
+    //"Month before"-button functionality
+    $("#monthBeforeBtn").on("click", function() {
+      if (currentDate.getMonth() == 0) {
+        currentDate = new Date(currentDate.getFullYear() - 1, 11, 1);
+      } else {
+        currentDate.setMonth(currentDate.getMonth() - 1);
+      }
+      reloadDays();
+      addHoverEvent();
+    });
+
+    //"Year after"-button functionality
+    $("#yearAfterBtn").on("click", function() {
+      currentDate.setYear(currentDate.getYear() + 1900 + 1);
+      reloadDays();
+      addHoverEvent();
+    });
+
+    //"Year before"-button functionality
+    $("#yearBeforeBtn").on("click", function() {
+      currentDate.setYear(currentDate.getYear() + 1900 - 1);
+      reloadDays();
+      addHoverEvent();
+    });
+
+    $("#eventlist").on("click", function() {
+      document.location.href = document.location.href.replace(
+        "index.html",
+        "eventlist.html"
+      );
+    });
+
+    $(document).on("click", "#addbtn", function() {
+      if (
+        $("#timefield").val() != "" &&
+        $("#namefield").val() != "" &&
+        $("#categoryField").val() != "None"
+      ) {
+        addEvent(
+          $("#namefield").val(),
+          null,
+          "null@null.com",
+          actualDateString + "T" + $("#timefield").val(),
+          actualDateString + "T" + $("#timefield").val(),
+          "Busy",
+          false,
+          null,
+          null,
+          '{"id":' + $("#categoryField").val() + "}",
+          null
+        );
+      } else if (
+        $("#timefield").val() == "" &&
+        $("#namefield").val() != "" &&
+        $("#categoryField").val() != "None"
+      ) {
+        addEvent(
+          $("#namefield").val(),
+          null,
+          "null@null.com",
+          actualDateString + "T" + "00:00",
+          actualDateString + "T" + "23:59",
+          "Busy",
+          true,
+          null,
+          null,
+          '{"id":' + $("#categoryField").val() + "}",
+          null
+        );
+      } else if (
+        $("#timefield").val() == "" &&
+        $("#namefield").val() != "" &&
+        $("#categoryField").val() == "None"
+      ) {
+        addEvent(
+          $("#namefield").val(),
+          null,
+          "null@null.com",
+          actualDateString + "T" + "00:00",
+          actualDateString + "T" + "23:59",
+          "Busy",
+          true,
+          null,
+          null,
+          "",
+          null
+        );
+      } else if (
+        $("#timefield").val() != "" &&
+        $("#namefield").val() != "" &&
+        $("#categoryField").val() == "None"
+      ) {
+        addEvent(
+          $("#namefield").val(),
+          null,
+          "null@null.com",
+          actualDateString + "T" + "00:00",
+          actualDateString + "T" + "23:59",
+          "Busy",
+          false,
+          null,
+          null,
+          "",
+          null
+        );
+      }
+    });
+    $(document).on("click", "#editbtn", function() {
+      document.location.href = document.location.href.replace(
+        "index.html",
+        "editingview.html?" + $(this).attr("evtId")
+      );
+    });
+    $(document).on("click", "#rembtn", function() {
+      deleteEvent($(this).attr("evtId"));
+      console.info("deleted event");
+    });
+    $(document).on("click", "#detailbtn", function() {
+      document.location.href = document.location.href.replace(
+        "index.html",
+        "detailview.html?" + $(this).attr("evtId")
+      );
+    });
   </script>
 </html>
