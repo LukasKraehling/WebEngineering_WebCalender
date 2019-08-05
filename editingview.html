@@ -84,7 +84,7 @@
         </tr>
         <tr>
           <td>Start:</td>
-          <td>
+          <td class="d-inline-flex">
             <input
               type="date"
               class="form-control"
@@ -103,7 +103,7 @@
         </tr>
         <tr>
           <td>End:</td>
-          <td>
+          <td class="d-inline-flex">
             <input
               type="date"
               class="form-control"
@@ -171,18 +171,8 @@
         <tr>
           <td>Categories:</td>
           <td>
-            <div id="categories">Loading...</div>
-            <div>
-              <select class="form-control" id="deleteCategory"></select>
-              <button id="deleteCat" type="button" class="btn btn-primary">
-                Delete
-              </button>
-            </div>
-            <div>
-              <select class="form-control" id="addCategory"></select>
-              <button id="addCat" type="button" class="btn btn-primary">
-                Add Category
-              </button>
+            <div id="categories" class="d-flex">
+              Loading...
             </div>
           </td>
         </tr>
@@ -224,13 +214,13 @@
 
     //###Variables###
     var categories = null;
+    var eventDataGlobal = null;
     let id = window.location.href.substring(
       window.location.href.indexOf(".html?") + 6,
       window.location.href.length
     );
 
     //###Main-Script###
-    retrieveEvent(id);
     getCategories();
 
     //Function to retrieve an event from the remote-database
@@ -238,6 +228,7 @@
       $.ajax({
         url: SERVICE_URL + "events/" + id,
         success: function(eventData) {
+          eventDataGlobal = eventData;
           createForm(eventData);
           return true;
         },
@@ -332,16 +323,21 @@
         document.getElementById("categories").classList.add("missingValue");
       } else {
         document.getElementById("categories").innerHTML = "";
-
-        for (var category of eventData.categories) {
-          document.getElementById("categories").innerHTML +=
-            category.name + ",";
-
-            $("#deleteCategory").append(
-            $("<option>")
-              .attr("value", category.id)
-              .text(category.name)
+        for (category of categories) {
+          $("#categories").append(
+            $(document.createElement("input")).attr({
+              id: "cat" + category.id,
+              name: category.name,
+              value: category.name,
+              class: "form-control catCheckbox",
+              type: "checkbox"
+            })
           );
+          $("#categories").append(document.createTextNode(category.name));
+        }
+
+        for (category of eventData.categories) {
+          $("#cat" + category.id).prop("checked", true);
         }
       }
 
@@ -360,13 +356,7 @@
         url: SERVICE_URL + "categories",
         success: function(data) {
           categories = data;
-          for (var category of categories) {
-          $("#addCategory").append(
-            $("<option>")
-              .attr("value", category.id)
-              .text(category.name)
-          );
-          }
+          retrieveEvent(id);
         },
         error: function(error) {
           alert(
@@ -393,44 +383,94 @@
       );
     });
 
-    //"Delete(Category)"-button functionality TODOO
-    $("#deleteCat").on("click", function() {
-      $("#deleteCategory").val();
-
-    });
-
     //"Submit"-button functionality
     $("#submit").on("click", function() {
       //Check for non-changed values
       if ($("#newTitle").val() === "") {
-        $("#newTitle").val() = eventData.title;
+        $("#newTitle").val(eventDataGlobal.title);
       }
       if ($("#newLocation").val() === "") {
-        $("#newLocation").val() = eventData.location;
+        $("#newLocation").val(eventDataGlobal.location);
       }
       if ($("#newOrganizer").val() === "") {
-        $("#newOrganizer").val() = eventData.organizer;
+        $("#newOrganizer").val(eventDataGlobal.organizer);
       }
       if ($("#newStartDate").val() === "") {
-        $("#newStartDate").val() = eventData.start;
+        $("#newStartDate").val(eventDataGlobal.start.substring(0, 10));
+      }
+      if ($("#newStartTime").val() === "") {
+        $("#newStartTime").val(
+          eventDataGlobal.start.substring(11, eventDataGlobal.start.length)
+        );
       }
       if ($("#newEndDate").val() === "") {
-        $("#newEndDate").val() = eventData.end;
+        $("#newEndDate").val(eventDataGlobal.end.substring(0, 10));
+      }
+      if ($("#newEndTime").val() === "") {
+        $("#newEndTime").val(
+          eventDataGlobal.end.substring(11, eventDataGlobal.end.length)
+        );
       }
       if ($("#newStatus").val() === "") {
-        $("#newStatus").val() = eventData.status;
+        $("#newStatus").val(eventDataGlobal.status);
       }
       if ($("#newWebpage").val() === "") {
-        $("#newWebpage").val() = eventData.webpage;
+        $("#newWebpage").val(eventDataGlobal.webpage);
       }
       if ($("#newExtra").val() === "") {
-        $("#newExtra").val() = eventData.extra;
+        $("#newExtra").val(eventDataGlobal.extra);
       }
 
+      //Build categories
+      let newCategories = "";
+      for (category of categories) {
+        if ($("#cat" + category.id).is(":checked")) {
+          newCategories += '{"id":' + category.id + "},";
+        }
+      }
+      newCategories = newCategories.substring(0, newCategories.length - 1);
+
+      var string =
+        '{"title":"' +
+        $("#newTitle").val() +
+        '",' +
+        '"location": "' +
+        $("#newLocation").val() +
+        '",' +
+        '"organizer": "' +
+        $("#newOrganizer").val() +
+        '",' +
+        '"start": "' +
+        $("#newStartDate").val() +
+        "T" +
+        $("#newStartTime").val() + //Format: 2014-12-24T18:00
+        '",' +
+        '"end": "' +
+        $("#newEndDate").val() +
+        "T" +
+        $("#newEndTime").val() + //Format: 2014-12-24T23:30
+        '",' +
+        '"status": "' +
+        $("#newStatus").val() +
+        '",' +
+        '"allday":' +
+        $("#newAllday").is(":checked") +
+        "," +
+        '"webpage": "' +
+        $("#newWebpage").val() +
+        '",' +
+        '"image data": null,' +
+        '"categories": [' +
+        newCategories +
+        "]," +
+        '"extra":"' +
+        $("#newExtra").val() +
+        '"}';
+
+      console.log(string);
       //Send AJAX-Request to update Event
-      /*
       $.ajax({
-        url: SERVICE_URL + "events/" + eventId,
+        url: SERVICE_URL + "events/" + id,
         type: "PUT",
         dataType: "json",
         data:
@@ -463,11 +503,14 @@
           $("#newWebpage").val() +
           '",' +
           '"image data": null,' +
-          '"categories": [],' +
+          '"categories": [' +
+          newCategories +
+          "]," +
           '"extra":"' +
           $("#newExtra").val() +
           '"}',
         success: function(data) {
+          window.location.reload(true);
           return true;
         },
         error: function(error) {
@@ -477,7 +520,6 @@
           return false;
         }
       });
-      */
     });
   </script>
 </html>

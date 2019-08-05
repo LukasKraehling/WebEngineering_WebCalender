@@ -183,6 +183,19 @@ body {
   border-bottom: 1px solid black;
 }
 
+#newStartTime {
+  margin-left: 15px;
+}
+
+#newEndTime {
+  margin-left: 15px;
+}
+
+.catCheckbox {
+  height: 20px;
+  width: 30px;
+}
+
 .eventDiv2 {
   font-size: 17px;
   margin-left: 10px;
