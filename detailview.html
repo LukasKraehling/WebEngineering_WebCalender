@@ -49,8 +49,11 @@
     </div> statt h1-->
     <h1 id="headline">Appointment loading...</h1>
     <div class="menu d-flex justify-content-left flex-rows">
-      <button id="back" type="button" class="btn btn-primary">
+      <button id="back" type="button" class="btn btn-primary back">
         Back to overview
+      </button>
+      <button id="back2" type="button" class="btn btn-primary back">
+        Back to eventlist
       </button>
       <button id="edit" type="button" class="btn btn-primary">
         Edit event
@@ -220,6 +223,14 @@
         "index.html"
       );
     });
+
+    $("#back2").on("click", function() {
+      document.location.href = document.location.href.replace(
+        "detailview.html?" + id,
+        "eventlist.html"
+      );
+    });
+
     $("#edit").on("click", function() {
       document.location.href = document.location.href.replace(
         "detailview.html?" + id,

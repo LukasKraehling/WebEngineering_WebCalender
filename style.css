@@ -11,6 +11,7 @@ body {
   text-align: center;
 }
 
+.back,
 #back,
 #edit,
 #submit {
@@ -185,6 +186,7 @@ body {
 /*Eventlist*/
 #eventlist-content {
   vertical-align: middle;
+  margin-right: 100px;
 }
 
 .eventDivList {
@@ -202,6 +204,12 @@ body {
 #addbtnlist {
   width: 60px;
   height: 40px;
+}
+
+#rembtnlist,
+#detailbtnlist,
+#editbtnlist {
+  float: right;
 }
 
 /*Button Styles*/

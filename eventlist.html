@@ -129,6 +129,33 @@
 
         $(eventDiv).append(event.start);
         $(eventDiv).append("; " + event.title);
+
+        var remBtn = $("<input/>").attr({
+          type: "button",
+          class: "detailview apmnt btn btn-primary eventbtn",
+          id: "rembtnlist",
+          value: "Remove",
+          evtId: event.id
+        });
+        var editBtn = $("<input/>").attr({
+          type: "button",
+          class: "detailview apmnt btn btn-primary eventbtn",
+          id: "editbtnlist",
+          value: "Edit",
+          evtId: event.id
+        });
+
+        var detailBtn = $("<input/>").attr({
+          type: "button",
+          class: "detailview apmnt btn btn-primary eventbtn",
+          id: "detailbtnlist",
+          value: "Details",
+          evtId: event.id
+        });
+
+        $(eventDiv).append(remBtn);
+        $(eventDiv).append(editBtn);
+        $(eventDiv).append(detailBtn);
         $("#eventlist-content").append(eventDiv);
       });
     }
@@ -193,6 +220,23 @@
       });
     }
 
+    function deleteEvent(id) {
+      $.ajax({
+        url: SERVICE_URL + "events/" + id,
+        type: "DELETE",
+        success: function(data) {
+          window.location.reload(true);
+          return true;
+        },
+        error: function(error) {
+          alert(
+            "Could not delete event: " + error.status + " " + error.statusText
+          );
+          return false;
+        }
+      });
+    }
+
     //Buttons
     $("#back").on("click", function() {
       document.location.href = document.location.href.replace(
@@ -200,6 +244,7 @@
         "index.html"
       );
     });
+
     $(document).on("click", "#addbtnlist", function() {
       if (
         $("#timefield").val() != "" &&
@@ -239,6 +284,24 @@
         );
       }
       console.info("success");
+    });
+
+    $(document).on("click", "#editbtnlist", function() {
+      document.location.href = document.location.href.replace(
+        "eventlist.html",
+        "editingview.html?" + $(this).attr("evtId")
+      );
+    });
+
+    $(document).on("click", "#rembtnlist", function() {
+      deleteEvent($(this).attr("evtId"));
+    });
+
+    $(document).on("click", "#detailbtnlist", function() {
+      document.location.href = document.location.href.replace(
+        "eventlist.html",
+        "detailview.html?" + $(this).attr("evtId")
+      );
     });
   </script>
 </html>
