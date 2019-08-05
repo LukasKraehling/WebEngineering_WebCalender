@@ -487,12 +487,13 @@
         var hoverDay = $("<div/>").attr({
           id: "hoverday"
         });
-        $(this).prepend(hoverDay);
+        $(this).append(hoverDay);
         $(hoverDay).show();
         $(hoverDay).addClass("onhover");
         var hoverDayHeader = $("<div/>").attr({
           id: "hoverbodyheader"
         });
+
         if (dayID == 1 || dayID == 21 || dayID == 31) {
           $(hoverDayHeader).append(
             "<p>" +
@@ -558,7 +559,9 @@
         $.each(events, function(i, event) {
           if (event.start.includes(actualDateString)) {
             var eventDiv = document.createElement("div");
-            $(eventDiv).addClass("eventDiv");
+            $(eventDiv).addClass(
+              "menu d-flex justify-content-left flex-rows eventDiv-hover"
+            );
             eventDiv.id = "event" + event.id;
 
             var evBlock = $("<div/>").attr({
@@ -567,7 +570,9 @@
             });
             $(eventDiv).append(evBlock);
 
-            $(eventDiv).append(event.title);
+            $(eventDiv).append("<div>" + event.title + "</div>");
+            $(eventDiv).append("<div>" + event.start + "</div>");
+            $(eventDiv).append("<div>" + event.organizer + "</div>");
             $(hoverDayBody).append(eventDiv);
           }
         });
