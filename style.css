@@ -54,7 +54,6 @@ body {
   height: 150px;
   margin: 20px; /*or 30px*/
   text-align: center;
-  font-family: "Comic Sans MS", cursive, sans-serif;
   font-size: 20px;
   border: 8px solid #0dab7f;
   background-color: var(--background-color);
@@ -74,7 +73,6 @@ body {
   width: 150px;
   height: 150px;
   text-align: center;
-  font-family: "Comic Sans MS", cursive, sans-serif;
   font-size: 20px;
   border: 8px solid #0dab7f;
   background-color: var(--background-color);
@@ -105,7 +103,6 @@ body {
   left: calc((150px / 2) + ((-150px * 3.3) / 2) - 8px);
   top: calc((150px / 2) + ((-150px * 3.3) / 2) - 8px);
   background-color: var(--background-color);
-  font-family: "Comic Sans MS", cursive, sans-serif;
   z-index: 2;
   overflow: auto;
   display: inline-block;
@@ -174,7 +171,6 @@ body {
   position: fixed;
   border: calc(8px * 3.5) solid #0dab7f;
   background-color: var(--background-color);
-  font-family: "Comic Sans MS", cursive, sans-serif;
   z-index: 2;
   overflow: auto;
 }
@@ -228,6 +224,11 @@ body {
   width: 30px;
 }
 
+#removeImg {
+  height: 20px;
+  width: 30px;
+}
+
 .eventDiv2 {
   font-size: 17px;
   margin-left: 10px;
@@ -275,6 +276,28 @@ body {
   margin-left: auto;
 }
 
+/*Categories*/
+#namefieldCat {
+  width: 200px;
+}
+
+#catBlock {
+  height: 12px;
+  width: 12px;
+  background-color: red;
+  margin-right: 20px;
+  margin-left: 30px;
+}
+
+.remCat {
+  margin-left: 20px;
+  margin-bottom: 20px;
+}
+
+.categoryDiv {
+  margin-bottom: 20px;
+}
+
 /*Button Styles*/
 .btn-primary,
 .btn-primary:visited,
@@ -298,4 +321,8 @@ input[type="time"]:before {
   content: attr(placeholder) !important;
   color: var(--background-color);
   margin-right: 0.5em;
+}
+
+.missingValue {
+  color: #7e7e7e;
 }

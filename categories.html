@@ -46,39 +46,61 @@
     <div class="header">
       <p>Ci-Ca-Calender: Categories</p>
     </div>
+    <div class="d-flex justify-content-left flex-rows"></div>
+    <div class="entrylineCats">
+      <button id="back" type="button" class="btn btn-primary">
+        Back to month view
+      </button>
+      <button id="addCat" class="detailview btn btn-primary">
+        Add
+      </button>
+      <input
+        type="text"
+        class="detailview form-control inputf"
+        id="namefieldCat"
+        placeholder="Category Name"
+      />
+    </div>
+    <div id="category-content"></div>
   </body>
 
   <script>
-    var categories = null;
     const USERNAME = "18222";
     const SERVICE_URL = "https://dhbw.cheekbyte.de/calendar/" + USERNAME + "/"; //DHBW-Usernames
 
-    //Function to retrieve an event from the remote-database
-    function retrieveEvent(id) {
-      $.ajax({
-        url: SERVICE_URL + "events/" + id,
-        success: function(eventData) {
-          eventDataGlobal = eventData;
-          createForm(eventData);
-          return true;
-        },
-        error: function(error) {
-          alert(
-            "Could not retrieve event: " + error.status + " " + error.statusText
-          );
-          return false;
-        }
-      });
-    }
+    //###Main-Script
+    getAndLoadCategories();
 
-    getCategories();
-
-    function getCategories() {
+    function getAndLoadCategories() {
       $.ajax({
         url: SERVICE_URL + "categories",
-        success: function(data) {
-          categories = data;
-          retrieveEvent(id);
+        success: function(categories) {
+          for (category of categories) {
+            var categoryDiv = document.createElement("div");
+            $(categoryDiv).addClass("d-flex justify-content-left flex-rows");
+            categoryDiv.id = "cat" + category.id;
+
+            var catBlock = $("<div/>").attr({
+              id: "catBlock",
+              class: "catBlock"
+            });
+            $(categoryDiv).append(catBlock);
+
+            $(categoryDiv).append(
+              '<div class="categoryDiv">' + category.name + "</div>"
+            );
+
+            var remBtn = $("<input/>").attr({
+              type: "button",
+              class: "btn btn-primary remCat",
+              id: "remCat",
+              value: "Remove",
+              catId: category.id
+            });
+
+            $(categoryDiv).append(remBtn);
+            $("#category-content").append(categoryDiv);
+          }
         },
         error: function(error) {
           alert(
@@ -88,5 +110,46 @@
         }
       });
     }
+
+    $("#back").on("click", function() {
+      document.location.href = document.location.href.replace(
+        "categories.html",
+        "index.html"
+      );
+    });
+
+    $(document).on("click", "#addCat", function() {
+      if ($("#namefieldCat").val() != "") {
+        $.ajax({
+          url: SERVICE_URL + "categories",
+          type: "POST",
+          dataType: "json",
+          data: '{"name":"' + $("#namefieldCat").val() + '"}',
+          success: function(data) {
+            window.location.reload(true);
+            return true;
+          },
+          error: function(error) {
+            alert("Could not add category: " + error.responseJSON.description);
+            return false;
+          }
+        });
+      }
+    });
+
+    $(document).on("click", "#remCat", function() {
+      $.ajax({
+        url: SERVICE_URL + "categories/" + $(this).attr("catId"),
+        type: "DELETE",
+        success: function(data) {
+          window.location.reload(true);
+          return true;
+        },
+        error: function(error) {
+          alert("Could not get categories: " + error.responseJSON.description);
+          return false;
+        }
+      });
+    });
   </script>
 </html>
