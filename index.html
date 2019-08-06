@@ -210,7 +210,7 @@
         index++
       ) {
         day = document.createElement("div");
-        //for the right naming of the days
+        //For the right naming of the days
         if (index == 1 || index == 21 || index == 31) {
           day.innerHTML =
             index + "st " + MONTH_NAMES_SHORT[currentDate.getMonth()];
@@ -226,14 +226,17 @@
         }
         day.id = index;
 
-        var d;
+        let tmpDay = new Date(
+          currentDate.getYear(),
+          currentDate.getMonth(),
+          index + 2
+        );
+        let weekday = WEEKDAY_NAMES_SHORT[tmpDay.getDay()];
+        let weekdayDiv = document.createElement("div");
+        $(weekdayDiv).addClass("weekdayDiv");
+        $(weekdayDiv).append(weekday);
 
-        if (day.id < 10) {
-          var date = "0" + day.id;
-          d = new Date(currentDate + date);
-        } else {
-          d = new Date(currentDate + day.id);
-        }
+        day.append(weekdayDiv);
 
         document.getElementById("calendar").appendChild(day);
       }
