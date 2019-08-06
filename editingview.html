@@ -188,6 +188,12 @@
             />
           </td>
         </tr>
+        <tr>
+          <td>Image:</td>
+          <td>
+            <input type="file" id="imageUpload" name="imageUpload" />
+          </td>
+        </tr>
       </table>
     </div>
   </body>
@@ -426,6 +432,18 @@
       }
       newCategories = newCategories.substring(0, newCategories.length - 1);
 
+      //Build BASE64-Image
+      let image_data = $("#imageUpload").prop("files")[0];
+      console.log(image_data);
+
+      var canvas = document.createElement("CANVAS");
+      var ctx = canvas.getContext("2d");
+      var dataURL;
+      canvas.height = this.naturalHeight;
+      canvas.width = this.naturalWidth;
+      ctx.drawImage(this, 0, 0);
+      dataURL = canvas.toDataURL(outputFormat);
+
       //Send AJAX-Request to update Event
       $.ajax({
         url: SERVICE_URL + "events/" + id,
@@ -475,9 +493,7 @@
           return true;
         },
         error: function(error) {
-          alert(
-            "Could not update event: " + error.status + " " + error.statusText
-          );
+          alert("Could not update event: " + error.responseJSON.description);
           return false;
         }
       });

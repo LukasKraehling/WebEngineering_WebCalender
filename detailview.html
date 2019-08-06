@@ -139,9 +139,7 @@
           return true;
         },
         error: function(error) {
-          alert(
-            "Could not retrieve event: " + error.status + " " + error.statusText
-          );
+          alert("Could not retrieve event: " + error.responseJSON.description);
           return false;
         }
       });

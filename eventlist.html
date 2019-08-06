@@ -237,9 +237,7 @@
           return true;
         },
         error: function(error) {
-          alert(
-            "Could not add event: " + error.status + " " + error.statusText
-          );
+          alert("Could not add event: " + error.responseJSON.description);
           return false;
         }
       });
@@ -254,9 +252,7 @@
           return true;
         },
         error: function(error) {
-          alert(
-            "Could not delete event: " + error.status + " " + error.statusText
-          );
+          alert("Could not delete event: " + error.responseJSON.description);
           return false;
         }
       });
