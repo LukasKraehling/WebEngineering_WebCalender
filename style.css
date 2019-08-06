@@ -41,7 +41,6 @@ body {
 }
 
 .back,
-#back,
 #edit,
 #submit {
   margin-left: 20px;
@@ -63,9 +62,12 @@ body {
   overflow-y: hidden;
 }
 
-#calendar > div > .eventDiv:first-child {
-  margin-top: 4px;
-  padding-top: 4px;
+.weekdayDiv {
+  font-size: 10px;
+  font-weight: bold;
+  margin-bottom: 4px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid black;
 }
 
 /*cloned day for hovered view*/
