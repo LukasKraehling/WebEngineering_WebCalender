@@ -50,9 +50,8 @@ body {
   font-size: 30px;
 }
 
-#eventlist {
-  display: block;
-  margin: 20px auto 15px auto;
+.menubtn {
+  margin: 15px 5px 10px 5px;
 }
 
 /*day in month-view*/

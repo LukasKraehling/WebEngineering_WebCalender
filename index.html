@@ -65,9 +65,14 @@
             Next year
           </button>
         </div>
-        <button id="eventlist" type="button" class="btn btn-primary">
-          Eventlist
-        </button>
+        <div class="menu d-flex justify-content-center flex-rows menubtn">
+          <button id="eventlist" type="button" class="btn btn-primary menubtn">
+            Eventlist
+          </button>
+          <button id="categories" type="button" class="btn btn-primary menubtn">
+            Categories
+          </button>
+        </div>
         <div class="content-calendar">
           <div
             id="calendar"
@@ -180,6 +185,24 @@
           .removeChild(document.getElementById("calendar").firstChild);
       }
 
+      //Add events to days
+      //Build string including year + month for searching
+      if (currentDate.getMonth() + 1 < 10) {
+        actualDateString =
+          currentDate.getYear() +
+          1900 +
+          "-0" +
+          (currentDate.getMonth() + 1) +
+          "-";
+      } else {
+        actualDateString =
+          currentDate.getYear() +
+          1900 +
+          "-" +
+          (currentDate.getMonth() + 1) +
+          "-";
+      }
+
       //Add new day-children matching the requested month
       for (
         let index = 1;
@@ -203,26 +226,22 @@
         }
         day.id = index;
 
+        var d
+
+        if (day.id < 10) {
+          var date = "0" + day.id;
+          d = new Date (currentDate + date);
+        }else{
+          d = new Date(currentDate + day.id);
+        }
+
+        console.info(d);
         document.getElementById("calendar").appendChild(day);
       }
 
-      //Add events to days
-      //Build string including year + month for searching
-      if (currentDate.getMonth() + 1 < 10) {
-        actualDateString =
-          currentDate.getYear() +
-          1900 +
-          "-0" +
-          (currentDate.getMonth() + 1) +
-          "-";
-      } else {
-        actualDateString =
-          currentDate.getYear() +
-          1900 +
-          "-" +
-          (currentDate.getMonth() + 1) +
-          "-";
-      }
+      
+
+      
 
       //Iterate over all events and check if they are in the current month
       $.each(events, function(i, event) {
@@ -552,6 +571,9 @@
             tempID;
         }
 
+        console.info(currentDate.getDate());
+        console.info(currentDate);
+
         $.each(events, function(i, event) {
           if (event.start.includes(actualDateString)) {
             var eventDiv = document.createElement("div");
@@ -774,6 +796,13 @@
       document.location.href = document.location.href.replace(
         "index.html",
         "eventlist.html"
+      );
+    });
+
+    $("#categories").on("click", function() {
+      document.location.href = document.location.href.replace(
+        "index.html",
+        "categories.html"
       );
     });
 
