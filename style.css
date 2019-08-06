@@ -18,6 +18,7 @@ body {
   text-align: center;
 }
 
+/*menu in standard month mode*/
 .change-date {
   width: var(--standard-width);
 }
@@ -40,6 +41,7 @@ body {
   margin: 15px 5px 10px 5px;
 }
 
+/*back,edit,submit buttons on subpages categories,eventlist,detailview,editingview*/
 .back,
 #back,
 #edit,
@@ -48,7 +50,7 @@ body {
   margin-bottom: 15px;
 }
 
-/*day in month-view*/
+/*day in standard month mode*/
 #calendar > div {
   width: 150px;
   height: 150px;
@@ -63,6 +65,7 @@ body {
   overflow-y: hidden;
 }
 
+/*week day name style*/
 .weekdayDiv {
   font-size: 10px;
   font-weight: bold;
@@ -87,7 +90,7 @@ body {
   top: -8px;
 }
 
-/*hover animation*/
+/*hover mode animation*/
 .onhover {
   text-shadow: 0px 0px 6px rgba(255, 255, 255, 1);
   box-shadow: 0px 5px 40px 0px rgba(0, 0, 0, 0.57);
@@ -121,10 +124,6 @@ body {
   font-size: calc(20px * 3.5);
   text-align: center;
   border-bottom: 1px solid black;
-}
-
-#categoryField {
-  width: 100px;
 }
 
 .eventDiv-hover {
@@ -195,11 +194,8 @@ body {
 #namefield {
   width: 135px;
 }
-#timefield {
-  width: 100px;
-}
 
-.ev #categoryField {
+#timefield {
   width: 100px;
 }
 
@@ -208,28 +204,14 @@ body {
   margin-bottom: 15px;
 }
 
+#categoryField {
+  width: 100px;
+}
+
 #daybodyheader p {
   font-size: calc(20px * 3.5);
   text-align: center;
   border-bottom: 1px solid black;
-}
-
-#newStartTime {
-  margin-left: 15px;
-}
-
-#newEndTime {
-  margin-left: 15px;
-}
-
-.catCheckbox {
-  height: 20px;
-  width: 30px;
-}
-
-#removeImg {
-  height: 20px;
-  width: 30px;
 }
 
 .eventDiv2 {
@@ -246,6 +228,18 @@ body {
   vertical-align: middle;
   margin-left: 15px;
   padding: 0 5px 0 5px;
+}
+
+/*Edit mode*/
+#newStartTime,
+#newEndTime {
+  margin-left: 15px;
+}
+
+.catCheckbox,
+#removeImg {
+  height: 20px;
+  width: 30px;
 }
 
 /*Eventlist*/
