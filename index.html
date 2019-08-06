@@ -126,11 +126,7 @@
       "Sat"
     ];
 
-    //###Variables(var)###
-    var currentDate = new Date();
-    var events = null;
-    var categories = null;
-    var colors = [
+    const COLORS = [
       "#425563",
       "#80746E",
       "#2AD2C9",
@@ -143,7 +139,8 @@
     //###Variables(var)###
     var currentDate = new Date(); //Gets the current month and year of the actual date
     var events = null;
-    var actualDateString; //Gets the day, month and year of the date the user is adding/editing/removing events
+    var categories = null;
+    var actualDateString;
 
     //###Main-Script####
     loading = document.createElement("div"); //?
@@ -243,7 +240,7 @@
       //Iterate over all events and check if they are in the current month
       $.each(events, function(i, event) {
         //Get a random (individual) color for each event
-        var random_color = colors[Math.floor(Math.random() * colors.length)];
+        var random_color = COLORS[Math.floor(Math.random() * COLORS.length)];
         document.documentElement.style.setProperty(
           "--random-color-appointment",
           random_color
