@@ -126,21 +126,19 @@
       "November",
       "December"
     ];
-
-    //###Variables###
-    let id = window.location.href.substring(
+    const ID = window.location.href.substring(
       window.location.href.indexOf(".html?") + 6,
       window.location.href.length
     );
 
     //###Main-Script###
-    retrieveEvent(id);
+    retrieveEvent();
 
     //###Functions###
     //Function to retrieve an event from the remote-database
-    function retrieveEvent(id) {
+    function retrieveEvent() {
       $.ajax({
-        url: SERVICE_URL + "events/" + id,
+        url: SERVICE_URL + "events/" + ID,
         success: function(eventData) {
           parseData(eventData);
           return true;
@@ -243,7 +241,7 @@
     //"Back to overview"-button functionality
     $("#back").on("click", function() {
       document.location.href = document.location.href.replace(
-        "detailview.html?" + id,
+        "detailview.html?" + ID,
         "index.html"
       );
     });
@@ -251,7 +249,7 @@
     //"Back to eventlist"-button functionality
     $("#back2").on("click", function() {
       document.location.href = document.location.href.replace(
-        "detailview.html?" + id,
+        "detailview.html?" + ID,
         "eventlist.html"
       );
     });
@@ -259,8 +257,8 @@
     //"Edit (entry)"-button functionality
     $("#edit").on("click", function() {
       document.location.href = document.location.href.replace(
-        "detailview.html?" + id,
-        "editingview.html?" + id
+        "detailview",
+        "editingview"
       );
     });
   </script>
