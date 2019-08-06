@@ -126,11 +126,7 @@
       "Sat"
     ];
 
-    //###Variables(var)###
-    var currentDate = new Date();
-    var events = null;
-    var categories = null;
-    var colors = [
+    const COLORS = [
       "#425563",
       "#80746E",
       "#2AD2C9",
@@ -141,9 +137,10 @@
     ];
 
     //###Variables(var)###
-    var currentDate = new Date(); //gets the current month and year of the actual date
+    var currentDate = new Date(); //Gets the current month and year of the actual date
     var events = null;
-    var actualDateString; //gets the day, month and year of the date the user is adding/editing/removing events
+    var categories = null;
+    var actualDateString;
 
     //###Main-Script####
     loading = document.createElement("div"); //?
@@ -154,9 +151,7 @@
     getCategories();
 
     //###Functions###
-
     //Function to get all events from the remote-database
-    //Example: addEvent("test", null, "lukas.K98@web.de", "2014-12-24T00:00", "2014-12-25T23:59", "Busy", "true", null, null, null, null);
     function getEventsAndReload() {
       $.ajax({
         url: SERVICE_URL + "events",
@@ -174,7 +169,7 @@
       });
     }
 
-    //Function to create as many day-divs as the current month has and overrides the old day-divs
+    //Function to create as many day-div's as the current month has and overrides the old day-div's
     function reloadDays() {
       var tmpEvt;
 
@@ -243,14 +238,14 @@
 
       //Iterate over all events and check if they are in the current month
       $.each(events, function(i, event) {
-        //get a random (individual) color for each event
-        var random_color = colors[Math.floor(Math.random() * colors.length)];
+        //Get a random (individual) color for each event
+        var random_color = COLORS[Math.floor(Math.random() * COLORS.length)];
         document.documentElement.style.setProperty(
           "--random-color-appointment",
           random_color
         );
 
-        //check the events at specific date given in actualDateString
+        //Check the events at specific date given in actualDateString
         if (event.start.includes(actualDateString)) {
           eventDiv = document.createElement("div");
           $(eventDiv).addClass("eventDiv");
@@ -767,6 +762,7 @@
       addHoverEvent();
     });
 
+    //"Eventlist"-button functionality
     $("#eventlist").on("click", function() {
       document.location.href = document.location.href.replace(
         "index.html",
@@ -774,6 +770,7 @@
       );
     });
 
+    //"Category"-button functionality
     $("#categories").on("click", function() {
       document.location.href = document.location.href.replace(
         "index.html",
@@ -781,6 +778,7 @@
       );
     });
 
+    //"Add (Appointment)"-button functionality
     $(document).on("click", "#addbtn", function() {
       if (
         $("#timefield").val() != "" &&
@@ -856,15 +854,21 @@
         );
       }
     });
+
+    //"Edit"-button functionality
     $(document).on("click", "#editbtn", function() {
       document.location.href = document.location.href.replace(
         "index.html",
         "editingview.html?" + $(this).attr("evtId")
       );
     });
+
+    //"Remove"-button functionality
     $(document).on("click", "#rembtn", function() {
       deleteEvent($(this).attr("evtId"));
     });
+
+    //"Detail"-button functionality
     $(document).on("click", "#detailbtn", function() {
       document.location.href = document.location.href.replace(
         "index.html",
