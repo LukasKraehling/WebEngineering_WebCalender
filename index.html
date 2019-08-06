@@ -482,6 +482,7 @@
         var hoverDay = $("<div/>").attr({
           id: "hoverday"
         });
+        $(this).css("overflow", "visible");
         $(this).append(hoverDay);
         $(hoverDay).show();
         $(hoverDay).addClass("onhover");
@@ -721,6 +722,7 @@
         });
       });
       $("#calendar > div").mouseleave(function() {
+        $(this).css("overflow", "hidden");
         $("#hoverday").remove();
 
         $(document).on("click", ".site", function(e) {

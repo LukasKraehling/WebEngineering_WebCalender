@@ -68,6 +68,12 @@ body {
   text-decoration: none;
   transition: all 0.4s ease 0s;
   position: relative;
+  overflow-y: hidden;
+}
+
+#calendar > div > .eventDiv:first-child {
+  margin-top: 4px;
+  padding-top: 4px;
 }
 
 /*cloned day for hovered view*/
