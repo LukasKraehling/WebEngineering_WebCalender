@@ -226,22 +226,17 @@
         }
         day.id = index;
 
-        var d
+        var d;
 
         if (day.id < 10) {
           var date = "0" + day.id;
-          d = new Date (currentDate + date);
-        }else{
+          d = new Date(currentDate + date);
+        } else {
           d = new Date(currentDate + day.id);
         }
 
-        console.info(d);
         document.getElementById("calendar").appendChild(day);
       }
-
-      
-
-      
 
       //Iterate over all events and check if they are in the current month
       $.each(events, function(i, event) {
@@ -289,9 +284,7 @@
       return new Date(year, month, 0).getDate();
     }
 
-    //Function to add an event to the remote-database !!!TODO!!! (Fix image-Data and categories)
     //Function to get all events from the remote-database
-    //Example: addEvent("test", null, "lukas.K98@web.de", "2014-12-24T00:00", "2014-12-25T23:59", "Busy", "true", null, null, null, null);
     function getEventsAndReload() {
       $.ajax({
         url: SERVICE_URL + "events",
@@ -307,7 +300,7 @@
       });
     }
 
-    //Function to add an event to the remote-database !!!TODO!!! (Fix image-Data)
+    //Function to add an event to the remote-database
     function addEvent(
       title,
       location,
@@ -382,7 +375,7 @@
       });
     }
 
-    //Function to update an event at the remote-database !!!TODO!!! (Fix image-Data)
+    //Function to update an event at the remote-database
     function updateEvent(
       eventId,
       title,
@@ -474,24 +467,6 @@
       });
     }
 
-    //Function to add a category to the remote-database
-    function addCategory(name) {
-      $.ajax({
-        url: SERVICE_URL + "categories",
-        type: "POST",
-        dataType: "json",
-        data: '{"name":"' + name + '"}',
-        success: function(data) {
-          window.location.reload(true);
-          return true;
-        },
-        error: function(error) {
-          alert("Could not add event: " + error.responseJSON.description);
-          return false;
-        }
-      });
-    }
-
     //Function to add Hover-Effects after reload of days
     function addHoverEvent() {
       $("#calendar > div").mouseenter(function() {
@@ -570,9 +545,6 @@
             "-" +
             tempID;
         }
-
-        console.info(currentDate.getDate());
-        console.info(currentDate);
 
         $.each(events, function(i, event) {
           if (event.start.includes(actualDateString)) {
@@ -889,7 +861,6 @@
     });
     $(document).on("click", "#rembtn", function() {
       deleteEvent($(this).attr("evtId"));
-      console.info("deleted event");
     });
     $(document).on("click", "#detailbtn", function() {
       document.location.href = document.location.href.replace(

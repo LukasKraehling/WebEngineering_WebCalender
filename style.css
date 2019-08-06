@@ -286,6 +286,28 @@ body {
   margin-left: auto;
 }
 
+/*Categories*/
+#namefieldCat {
+  width: 200px;
+}
+
+#catBlock {
+  height: 12px;
+  width: 12px;
+  background-color: red;
+  margin-right: 20px;
+  margin-left: 30px;
+}
+
+.remCat {
+  margin-left: 20px;
+  margin-bottom: 20px;
+}
+
+.categoryDiv {
+  margin-bottom: 20px;
+}
+
 /*Button Styles*/
 .btn-primary,
 .btn-primary:visited,
