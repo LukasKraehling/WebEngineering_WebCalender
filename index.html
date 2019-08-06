@@ -265,8 +265,9 @@
           }
 
           document
-            .getElementById(event.start.substring(9, 10))
+            .getElementById(event.start.substring(7, 10).replace("-0", "").replace("-", ""))
             .appendChild(eventDiv);
+            
         }
       });
 

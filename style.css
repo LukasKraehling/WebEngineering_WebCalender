@@ -41,6 +41,7 @@ body {
 }
 
 .back,
+#back,
 #edit,
 #submit {
   margin-left: 20px;
@@ -286,18 +287,19 @@ body {
 #catBlock {
   height: 12px;
   width: 12px;
-  background-color: red;
+  background-color: #0dab7f;
   margin-right: 20px;
   margin-left: 30px;
 }
 
 .remCat {
   margin-left: 20px;
-  margin-bottom: 20px;
 }
 
-.categoryDiv {
-  margin-bottom: 20px;
+.catDivCont {
+  vertical-align: middle;
+  align-items: center;
+  margin-bottom: 5px;
 }
 
 /*Button Styles*/

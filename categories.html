@@ -77,7 +77,9 @@
         success: function(categories) {
           for (category of categories) {
             var categoryDiv = document.createElement("div");
-            $(categoryDiv).addClass("d-flex justify-content-left flex-rows");
+            $(categoryDiv).addClass(
+              "d-flex justify-content-left flex-rows catDivCont"
+            );
             categoryDiv.id = "cat" + category.id;
 
             var catBlock = $("<div/>").attr({
@@ -86,9 +88,7 @@
             });
             $(categoryDiv).append(catBlock);
 
-            $(categoryDiv).append(
-              '<div class="categoryDiv">' + category.name + "</div>"
-            );
+            $(categoryDiv).append("<div>" + category.name + "</div>");
 
             var remBtn = $("<input/>").attr({
               type: "button",
