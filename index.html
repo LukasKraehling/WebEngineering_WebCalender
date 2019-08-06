@@ -301,9 +301,7 @@
           addHoverEvent();
         },
         error: function(error) {
-          alert(
-            "Could not get events: " + error.status + " " + error.statusText
-          );
+          alert("Could not get events: " + error.responseJSON.description);
           return false;
         }
       });
@@ -364,9 +362,7 @@
           return true;
         },
         error: function(error) {
-          alert(
-            "Could not add event: " + error.status + " " + error.statusText
-          );
+          alert("Could not add event: " + error.responseJSON.description);
           return false;
         }
       });
@@ -380,9 +376,7 @@
           return true;
         },
         error: function(error) {
-          alert(
-            "Could not retrieve event: " + error.status + " " + error.statusText
-          );
+          alert("Could not retrieve event: " + error.responseJSON.description);
           return false;
         }
       });
@@ -443,9 +437,7 @@
           return true;
         },
         error: function(error) {
-          alert(
-            "Could not update event: " + error.status + " " + error.statusText
-          );
+          alert("Could not update event: " + error.responseJSON.description);
           return false;
         }
       });
@@ -462,9 +454,7 @@
           return true;
         },
         error: function(error) {
-          alert(
-            "Could not delete event: " + error.status + " " + error.statusText
-          );
+          alert("Could not delete event: " + error.responseJSON.description);
           return false;
         }
       });
@@ -478,9 +468,7 @@
           categories = data;
         },
         error: function(error) {
-          alert(
-            "Could not get categories: " + error.status + " " + error.statusText
-          );
+          alert("Could not get categories: " + error.responseJSON.description);
           return false;
         }
       });
@@ -498,9 +486,7 @@
           return true;
         },
         error: function(error) {
-          alert(
-            "Could not add event: " + error.status + " " + error.statusText
-          );
+          alert("Could not add event: " + error.responseJSON.description);
           return false;
         }
       });
