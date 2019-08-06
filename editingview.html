@@ -226,23 +226,24 @@
       "November",
       "December"
     ];
+    const ID = window.location.href.substring(
+      window.location.href.indexOf(".html?") + 6,
+      window.location.href.length
+    );
 
     //###Variables###
     var categories = null;
     var newCategories = "";
     var eventDataGlobal = null;
-    let id = window.location.href.substring(
-      window.location.href.indexOf(".html?") + 6,
-      window.location.href.length
-    );
 
     //###Main-Script###
     getCategories();
 
+    //###Functions###
     //Function to retrieve an event from the remote-database
-    function retrieveEvent(id) {
+    function retrieveEvent() {
       $.ajax({
-        url: SERVICE_URL + "events/" + id,
+        url: SERVICE_URL + "events/" + ID,
         success: function(eventData) {
           eventDataGlobal = eventData;
           createForm(eventData);
@@ -375,7 +376,7 @@
         url: SERVICE_URL + "categories",
         success: function(data) {
           categories = data;
-          retrieveEvent(id);
+          retrieveEvent();
         },
         error: function(error) {
           alert(
@@ -389,7 +390,7 @@
     //"Back to overview"-button functionality
     $("#back").on("click", function() {
       document.location.href = document.location.href.replace(
-        "editingview.html?" + id,
+        "editingview.html?" + ID,
         "index.html"
       );
     });
@@ -397,7 +398,7 @@
     //"Back to Eventlist"-button functionality
     $("#back2").on("click", function() {
       document.location.href = document.location.href.replace(
-        "editingview.html?" + id,
+        "editingview.html?" + ID,
         "eventlist.html"
       );
     });
@@ -458,7 +459,7 @@
           "load",
           function() {
             $.ajax({
-              url: SERVICE_URL + "images/" + id,
+              url: SERVICE_URL + "images/" + ID,
               type: "POST",
               dataType: "json",
               data: '{"imagedata":"' + readerB64.result + '"}',
@@ -476,7 +477,7 @@
         readerB64.readAsDataURL(image_data);
       } else if ($("#removeImg").is(":checked")) {
         $.ajax({
-          url: SERVICE_URL + "images/" + id,
+          url: SERVICE_URL + "images/" + ID,
           type: "DELETE",
           success: function(data) {
             return true;
@@ -489,7 +490,7 @@
       }
       //Send AJAX-Request to update Event after image has been converted
       $.ajax({
-        url: SERVICE_URL + "events/" + id,
+        url: SERVICE_URL + "events/" + ID,
         type: "PUT",
         dataType: "json",
         data:
