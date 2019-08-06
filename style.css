@@ -235,6 +235,11 @@ body {
   width: 30px;
 }
 
+#removeImg {
+  height: 20px;
+  width: 30px;
+}
+
 .eventDiv2 {
   font-size: 17px;
   margin-left: 10px;
@@ -305,4 +310,8 @@ input[type="time"]:before {
   content: attr(placeholder) !important;
   color: #7e7e7e;
   margin-right: 0.5em;
+}
+
+.missingValue {
+  color: #7e7e7e;
 }

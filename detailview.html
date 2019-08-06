@@ -97,6 +97,12 @@
           <td>Extra:</td>
           <td id="extra">Loading...</td>
         </tr>
+        <tr>
+          <td>Image:</td>
+          <td>
+            <img id="image" alt="Image" />
+          </td>
+        </tr>
       </table>
     </div>
   </body>
@@ -222,6 +228,14 @@
         document.getElementById("extra").classList.add("missingValue");
       } else {
         document.getElementById("extra").innerHTML = eventData.webpage;
+      }
+
+      //Getting and checking value for "Image"
+      if (eventData.imageurl === null) {
+        document.getElementById("image").outerHTML =
+          '<div class="missingValue">None</div>';
+      } else {
+        document.getElementById("image").src = eventData.imageurl;
       }
     }
 

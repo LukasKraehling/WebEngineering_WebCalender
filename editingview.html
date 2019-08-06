@@ -140,7 +140,6 @@
               class="form-control"
               id="newAllday"
               onclick="return false;"
-              readonly
             />
           </td>
         </tr>
@@ -191,7 +190,17 @@
         <tr>
           <td>Image:</td>
           <td>
-            <input type="file" id="imageUpload" name="imageUpload" />
+            <input
+              type="file"
+              id="newImage"
+              name="newImage"
+              accept=".jpg, .png"
+            />
+            <div class="d-inline-flex">
+              Remove Image
+              <input type="checkbox" class="form-control" id="removeImg" />
+            </div>
+            <img id="image" alt="Image" />
           </td>
         </tr>
       </table>
@@ -220,6 +229,7 @@
 
     //###Variables###
     var categories = null;
+    var newCategories = "";
     var eventDataGlobal = null;
     let id = window.location.href.substring(
       window.location.href.indexOf(".html?") + 6,
@@ -343,6 +353,13 @@
         }
       }
 
+      //Getting and checking value for "Image"
+      if (eventData.imageurl === null) {
+        document.getElementById("image").outerHTML = "";
+      } else {
+        document.getElementById("image").src = eventData.imageurl;
+      }
+
       //Getting and preparing form value for "Extra"
       if (eventData.extra === "null") {
         $("#newExtra").attr("placeholder", "None");
@@ -387,7 +404,8 @@
 
     //"Submit"-button functionality
     $("#submit").on("click", function() {
-      //Check for non-changed values
+      let changedImage = true;
+      //Check for non-changed values and use old values if necessary
       if ($("#newTitle").val() === "") {
         $("#newTitle").val(eventDataGlobal.title);
       }
@@ -423,8 +441,8 @@
         $("#newExtra").val(eventDataGlobal.extra);
       }
 
+      console.log($("#newImage").prop("files").length);
       //Build categories
-      let newCategories = "";
       for (category of categories) {
         if ($("#cat" + category.id).is(":checked")) {
           newCategories += '{"id":' + category.id + "},";
@@ -432,19 +450,44 @@
       }
       newCategories = newCategories.substring(0, newCategories.length - 1);
 
-      //Build BASE64-Image
-      let image_data = $("#imageUpload").prop("files")[0];
-      console.log(image_data);
-
-      var canvas = document.createElement("CANVAS");
-      var ctx = canvas.getContext("2d");
-      var dataURL;
-      canvas.height = this.naturalHeight;
-      canvas.width = this.naturalWidth;
-      ctx.drawImage(this, 0, 0);
-      dataURL = canvas.toDataURL(outputFormat);
-
-      //Send AJAX-Request to update Event
+      //Build BASE64-Image and add it to the event at the remote-database
+      if ($("#newImage").prop("files").length != 0) {
+        let image_data = $("#newImage").prop("files")[0];
+        let readerB64 = new FileReader();
+        readerB64.addEventListener(
+          "load",
+          function() {
+            $.ajax({
+              url: SERVICE_URL + "images/" + id,
+              type: "POST",
+              dataType: "json",
+              data: '{"imagedata":"' + readerB64.result + '"}',
+              success: function(data) {
+                return true;
+              },
+              error: function(error) {
+                alert("Could not add event: " + error.responseJSON.description);
+                return false;
+              }
+            });
+          },
+          false
+        );
+        readerB64.readAsDataURL(image_data);
+      } else if ($("#removeImg").is(":checked")) {
+        $.ajax({
+          url: SERVICE_URL + "images/" + id,
+          type: "DELETE",
+          success: function(data) {
+            return true;
+          },
+          error: function(error) {
+            alert("Could not add event: " + error.responseJSON.description);
+            return false;
+          }
+        });
+      }
+      //Send AJAX-Request to update Event after image has been converted
       $.ajax({
         url: SERVICE_URL + "events/" + id,
         type: "PUT",
@@ -478,7 +521,7 @@
           '"webpage": "' +
           $("#newWebpage").val() +
           '",' +
-          '"image data": null,' +
+          '"image data": "null",' +
           '"categories": [' +
           newCategories +
           "]," +
